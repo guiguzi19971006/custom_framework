@@ -1,0 +1,7 @@
+[2023-12-24 23:55:13] Fatal error: Uncaught TypeError: App\Controllers\ProductController::show(): Argument #1 ($productId) must be of type int, string given in /var/www/html/App/Controllers/ProductController.php:48
+Stack trace:
+#0 [internal function]: App\Controllers\ProductController->show('/products/1', '1')
+#1 /var/www/html/App/Bootstrap/Bootstrapping.php(36): call_user_func_array(Array, Array)
+#2 /var/www/html/index.php(32): App\Bootstrap\Bootstrapping::init()
+#3 {main}
+  thrown in /var/www/html/App/Controllers/ProductController.php on line 48

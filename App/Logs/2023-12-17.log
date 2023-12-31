@@ -1,0 +1,10 @@
+[2023-12-17 17:07:11] Parse error: syntax error, unexpected token "}" in /var/www/html/App/Controllers/ProductController.php on line 36
+[2023-12-17 17:09:15] Parse error: syntax error, unexpected token "}", expecting ";" in /var/www/html/App/Services/ProductService.php on line 36
+[2023-12-17 21:22:42] Fatal error: Uncaught ArgumentCountError: Too few arguments to function App\Controllers\ProductController::__construct(), 1 passed and exactly 2 expected in /var/www/html/App/Controllers/ProductController.php:21
+Stack trace:
+#0 [internal function]: App\Controllers\ProductController->__construct(Object(App\Services\ProductService))
+#1 /var/www/html/App/Providers/Provider.php(42): ReflectionClass->newInstanceArgs(Array)
+#2 /var/www/html/App/Bootstrap/Bootstrapping.php(53): App\Providers\Provider->getInstance(Object(ReflectionClass))
+#3 /var/www/html/index.php(33): App\Bootstrap\Bootstrapping::init()
+#4 {main}
+  thrown in /var/www/html/App/Controllers/ProductController.php on line 21
