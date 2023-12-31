@@ -28,7 +28,7 @@ class Provider
 
         foreach ($constructor->getParameters() as $param) {
             if (($paramType = $param->getType()) === null) {
-                throw new Exception('All parameters of ' . $class->getName() . '::' . $constructor->getName() . ' must give a specific type.');
+                throw new Exception('All parameters of ' . $class->getName() . '::' . $constructor->getName() . '() must give a specific type.');
             }
 
             $paramTypeName = $paramType->getName();
