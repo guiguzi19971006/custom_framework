@@ -43,7 +43,7 @@ class Route
     /**
      * Request HTTP method: GET
      * @param string $url
-     * @param array $action
+     * @param array{controller:string, method:string} $action
      * @return static
      */
     public static function get(string $url, array $action): static

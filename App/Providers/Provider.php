@@ -13,8 +13,9 @@ class Provider
      * 
      * @param \ReflectionClass $class
      * @return object|null
+     * @throws \Exception
      */
-    public function getInstance(ReflectionClass $class): ?object
+    public static function getInstance(ReflectionClass $class): ?object
     {
         if (!$class->isInstantiable()) {
             return null;
@@ -34,10 +35,10 @@ class Provider
             $paramTypeName = $paramType->getName();
 
             if (!in_array($paramTypeName, Container::$bindings['services']) && !in_array($paramTypeName, Container::$bindings['repositories'])) {
-                throw new Exception('Parameters\' type of ' . $class->getName() . '::' . $constructor->getName() . ' are not registered.');
+                throw new Exception('Parameters\' type of ' . $class->getName() . '::' . $constructor->getName() . ' are not registered in service container or repository container.');
             }
 
-            $params[] = $this->getInstance(new ReflectionClass($paramTypeName));
+            $params[] = static::getInstance(new ReflectionClass($paramTypeName));
         }
 
         return $class->newInstanceArgs($params);

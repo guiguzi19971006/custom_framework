@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\ProductService;
+use Exception;
 
 class ProductController extends Controller
 {
@@ -26,11 +27,16 @@ class ProductController extends Controller
      * 所有商品頁
      * 
      * @return void
+     * @throws \Exception
      */
     public function index(): void
     {
-        $products = $this->productService->getAllProducts();
-        view('product.index', ['products' => $products]);
+        try {
+            $products = $this->productService->getAllProducts();
+            view('product.index', ['products' => $products]);
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -38,9 +44,14 @@ class ProductController extends Controller
      * 
      * @param string $productId
      * @return void
+     * @throws \Exception
      */
     public function show(string $productId): void
     {
-        view('product.show', ['productId' => $productId]);
+        try {
+            view('product.show', ['productId' => $productId]);
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 }

@@ -13,6 +13,7 @@ class Bootstrapping
      * 處理請求
      * 
      * @return void
+     * @throws \Exception
      */
     public static function init(): void
     {
@@ -33,6 +34,11 @@ class Bootstrapping
         }
 
         preg_match($url['pattern'], $currentUrl, $params);
-        call_user_func_array([(new Provider())->getInstance(new ReflectionClass($url['action']['controller'])), $url['action']['method']], array_slice($params, 1));
+        
+        try {
+            call_user_func_array([Provider::getInstance(new ReflectionClass($url['action']['controller'])), $url['action']['method']], array_slice($params, 1));
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 }

@@ -19,4 +19,8 @@ register_shutdown_function(function () {
 
 date_default_timezone_set('Asia/Taipei');
 
-Bootstrapping::init();
+try {
+    Bootstrapping::init();
+} catch (Exception $e) {
+    logging('Exception: ' . $e->getMessage());
+}
