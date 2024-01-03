@@ -5,7 +5,6 @@ namespace App\Bootstrap;
 use App\Providers\Provider;
 use Routes\Route;
 use Exception;
-use ReflectionClass;
 
 class Bootstrapping
 {
@@ -36,7 +35,7 @@ class Bootstrapping
         preg_match($url['pattern'], $currentUrl, $params);
         
         try {
-            call_user_func_array([Provider::getInstance(new ReflectionClass($url['action']['controller'])), $url['action']['method']], array_slice($params, 1));
+            call_user_func_array([Provider::getInstance($url['action']['controller']), $url['action']['method']], array_slice($params, 1));
         } catch (Exception $e) {
             throw $e;
         }

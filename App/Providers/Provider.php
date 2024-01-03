@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Containers\Container;
 use ReflectionClass;
+use ReflectionException;
 use Exception;
 
 class Provider
@@ -11,36 +12,39 @@ class Provider
     /**
      * 取得類別實體物件
      * 
-     * @param \ReflectionClass $class
-     * @return object|null
+     * @param string $class
+     * @return object
+     * @throws \ReflectionException
      * @throws \Exception
      */
-    public static function getInstance(ReflectionClass $class): ?object
+    public static function getInstance(string $class): object
     {
-        if (!$class->isInstantiable()) {
-            return null;
+        $reflector = new ReflectionClass($class);
+        
+        if (!$reflector->isInstantiable()) {
+            throw new ReflectionException('The provide class is not instantiable.');
         }
 
-        if (($constructor = $class->getConstructor()) === null || $constructor->getNumberOfRequiredParameters() === 0) {
-            return $class->newInstance();
+        if (($constructor = $reflector->getConstructor()) === null || $constructor->getNumberOfRequiredParameters() === 0) {
+            return $reflector->newInstance();
         }
 
         $params = [];
 
         foreach ($constructor->getParameters() as $param) {
             if (($paramType = $param->getType()) === null) {
-                throw new Exception('All parameters of ' . $class->getName() . '::' . $constructor->getName() . '() must give a specific type.');
+                throw new Exception('All parameters of ' . $reflector->getName() . '::' . $constructor->getName() . '() must give a specific type.');
             }
 
             $paramTypeName = $paramType->getName();
 
             if (!in_array($paramTypeName, Container::$bindings['services']) && !in_array($paramTypeName, Container::$bindings['repositories'])) {
-                throw new Exception('Parameters\' type of ' . $class->getName() . '::' . $constructor->getName() . ' are not registered in service container or repository container.');
+                throw new Exception('Parameters\' type of ' . $reflector->getName() . '::' . $constructor->getName() . ' are not registered in container.');
             }
 
-            $params[] = static::getInstance(new ReflectionClass($paramTypeName));
+            $params[] = static::getInstance($paramTypeName);
         }
 
-        return $class->newInstanceArgs($params);
+        return $reflector->newInstanceArgs($params);
     }
 }
