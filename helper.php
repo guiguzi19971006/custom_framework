@@ -13,7 +13,7 @@ if (!function_exists('view')) {
         $viewFile = APP_URL . 'Views' . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $view) . '.php';
 
         if (!file_exists($viewFile)) {
-            throw new Exception('The provide file of view does not exist.');
+            throw new Exception('The provided file of view does not exist.');
         }
 
         if ($datas !== null) {

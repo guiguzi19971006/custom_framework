@@ -22,7 +22,7 @@ class Provider
         $reflector = new ReflectionClass($class);
         
         if (!$reflector->isInstantiable()) {
-            throw new ReflectionException('The provide class is not instantiable.');
+            throw new ReflectionException('The provided class is not instantiable.');
         }
 
         if (($constructor = $reflector->getConstructor()) === null || $constructor->getNumberOfRequiredParameters() === 0) {
