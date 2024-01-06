@@ -51,7 +51,7 @@ if (!function_exists('env')) {
      */
     function env(string $key, mixed $default = null): mixed
     {
-        $envFilePath = ROOT_URL . '.env';
+        $envFilePath = ROOT_PATH . '.env';
 
         if (!file_exists($envFilePath)) {
             return $default;
@@ -82,7 +82,7 @@ if (!function_exists('env')) {
 
 if (!function_exists('logging')) {
     /**
-     * 將錯誤訊息寫入 Log
+     * 將訊息寫入 Log
      * 
      * @param string $message
      * @return bool
@@ -96,29 +96,6 @@ if (!function_exists('logging')) {
         }
 
         return true;
-    }
-}
-
-if (!function_exists('getErrorMessage')) {
-    /**
-     * 取得錯誤訊息
-     * 
-     * @return string|null
-     */
-    function getErrorMessage(): ?string
-    {
-        if (($errorInfo = error_get_last()) === null) {
-            return null;
-        }
-
-        $errorTypeName = match ($errorInfo['type']) {
-            E_ERROR => 'Fatal error',
-            E_WARNING => 'Warning',
-            E_PARSE => 'Parse error',
-            E_NOTICE => 'Notice',
-            default => 'Error'
-        };
-        return $errorTypeName . ': ' . $errorInfo['message'] . ' in ' . $errorInfo['file'] . ' on line ' . $errorInfo['line'];
     }
 }
 
