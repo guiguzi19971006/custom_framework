@@ -3,5 +3,5 @@
 use Routes\Route;
 use App\Controllers\ProductController;
 
-Route::get('/products', ['controller' => ProductController::class, 'method' => 'index']);
-Route::get('/products/{product_id}', ['controller' => ProductController::class, 'method' => 'show']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{product_id}', [ProductController::class, 'show']);

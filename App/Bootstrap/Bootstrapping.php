@@ -28,14 +28,15 @@ class Bootstrapping
 
         $url = current($mappingUrls);
 
-        if (!isset($url['action']['controller'], $url['action']['method'])) {
+        if (count($url['action']) < 2) {
             throw new Exception('Route must provide controller and method.');
         }
 
+        $url['action'] = array_values( $url['action']);
         preg_match($url['pattern'], $currentUrl, $params);
         
         try {
-            call_user_func_array([Provider::getInstance($url['action']['controller']), $url['action']['method']], array_slice($params, 1));
+            call_user_func_array([Provider::getInstance($url['action'][0]), $url['action'][1]], array_slice($params, 1));
         } catch (Exception $e) {
             throw $e;
         }
