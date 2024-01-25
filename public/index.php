@@ -8,13 +8,10 @@ defined('PUBLIC_PATH') || define('PUBLIC_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 
 require_once '../helper.php';
 require_once '../shutdown.php';
+require_once '../exception_handler.php';
 require_once '../autoload.php';
 require_once '../routes.php';
 
 use App\Bootstrap\Bootstrapping;
 
-try {
-    Bootstrapping::init();
-} catch (Exception $e) {
-    logging('Exception: ' . $e->getMessage());
-}
+Bootstrapping::init();
