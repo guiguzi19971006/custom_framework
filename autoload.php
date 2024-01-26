@@ -1,6 +1,6 @@
 <?php
 
-spl_autoload_register(function ($class) {
+spl_autoload_register(function (string $class) {
     $filePath = ROOT_PATH . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 
     if (!file_exists($filePath)) {

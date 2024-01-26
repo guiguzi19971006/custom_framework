@@ -1,5 +1,6 @@
 <?php
 
-set_exception_handler(function (Throwable $e) {
-    logging('Exception: ' . $e->getMessage());
+set_exception_handler(function (Throwable $ex) {
+    logging($ex);
+    view('exception', ['exception' => $ex]);
 });

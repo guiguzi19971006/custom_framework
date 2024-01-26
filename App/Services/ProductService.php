@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Repositories\ProductRepository;
-use Exception;
 
 class ProductService
 {
@@ -27,14 +26,9 @@ class ProductService
      * 取得所有產品
      * 
      * @return array
-     * @throws \Exception
      */
     public function getAllProducts(): array
     {
-        try {
-            return $this->productRepository->getAllProducts();
-        } catch (Exception $e) {
-            throw $e;
-        }
+        return $this->productRepository->getAllProducts();
     }
 }
