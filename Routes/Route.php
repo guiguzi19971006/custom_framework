@@ -87,7 +87,7 @@ class Route
         }
 
         if (count($arguments) < $reflector->getNumberOfRequiredParameters()) {
-            throw new Exception('Must provide at least two parameters for routing.');
+            throw new Exception('Must provide at least two parameters for routing');
         }
 
         foreach ($reflector->getParameters() as $i => $parameter) {
@@ -96,7 +96,7 @@ class Route
             }
 
             if (gettype($arguments[$i]) !== $parameter->getType()->getName()) {
-                throw new Exception('Provide parameters\' types must correspond the method of routing.');
+                throw new Exception('Provide parameters\' types must correspond the method of routing');
             }
         }
 
