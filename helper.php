@@ -1,19 +1,20 @@
 <?php
 
-if (!function_exists('view')) {
+if (! function_exists('view')) {
     /**
      * 視覺視圖
      * 
      * @param string $view
      * @param array|null $datas
      * @return void
+     * @throws \Exception
      */
     function view(string $view, ?array $datas = null): void
     {
         $viewFile = APP_URL . 'Views' . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $view) . '.php';
 
-        if (!file_exists($viewFile)) {
-            throw new Exception('The provided file of view does not exist.');
+        if (! file_exists($viewFile)) {
+            throw new \Exception('The provided file of view does not exist');
         }
 
         if ($datas !== null) {
@@ -27,7 +28,7 @@ if (!function_exists('view')) {
     }
 }
 
-if (!function_exists('redirect')) {
+if (! function_exists('redirect')) {
     /**
      * 重導向
      * 
@@ -41,7 +42,7 @@ if (!function_exists('redirect')) {
     }
 }
 
-if (!function_exists('env')) {
+if (! function_exists('env')) {
     /**
      * 讀取並取得 .env 檔案內容
      * 
@@ -53,7 +54,7 @@ if (!function_exists('env')) {
     {
         $envFilePath = ROOT_PATH . '.env';
 
-        if (!file_exists($envFilePath)) {
+        if (! file_exists($envFilePath)) {
             return $default;
         }
 
@@ -80,7 +81,7 @@ if (!function_exists('env')) {
     }
 }
 
-if (!function_exists('logging')) {
+if (! function_exists('logging')) {
     /**
      * 將訊息寫入 Log
      * 
@@ -99,7 +100,7 @@ if (!function_exists('logging')) {
     }
 }
 
-if (!function_exists('base64UrlEncode')) {
+if (! function_exists('base64UrlEncode')) {
     /**
      * 將字串做 base64 encode 處理
      * 
@@ -112,7 +113,7 @@ if (!function_exists('base64UrlEncode')) {
     }
 }
 
-if (!function_exists('jwtGenerator')) {
+if (! function_exists('jwtGenerator')) {
     /**
      * 產生 JWT
      * 
@@ -128,28 +129,27 @@ if (!function_exists('jwtGenerator')) {
     }
 }
 
-if (!function_exists('jwtVerify')) {
+if (! function_exists('jwtVerify')) {
     /**
      * 驗證 JWT
      * 
      * @param string $token
      * @param string $secret
      * @return bool
+     * @throws \Exception
      */
     function jwtVerify(string $token, string $secret): bool
     {
         $tokenInfos = explode('.', $token);
 
         if (count($tokenInfos) < 3) {
-            return false;
+            throw new \Exception('The provided JWT is invalid');
         }
 
-        $encodedHeader = $tokenInfos[0];
-        $encodedPayload = $tokenInfos[1];
-        $encodedSignature = $tokenInfos[2];
+        [$encodedHeader, $encodedPayload, $encodedSignature] = $tokenInfos;
         $originalPayload = json_decode(base64_decode($encodedPayload), true);
 
-        if (!isset($originalPayload['exp']) || $originalPayload['exp'] <= time()) {
+        if (! isset($originalPayload['exp']) || $originalPayload['exp'] <= time()) {
             return false;
         }
 
