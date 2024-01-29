@@ -77,7 +77,7 @@ class Route
         $httpMethod = strtoupper($name);
         
         if (! $reflector->hasCase($httpMethod)) {
-            return;
+            throw new Exception('Call to undefined method ' . Route::class . '::' . $name . '()');
         }
 
         try {
