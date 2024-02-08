@@ -1,7 +1,7 @@
 <?php
 
 set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline) {
-    if (! (error_reporting() & $errno)) {
+    if (!(error_reporting() & $errno)) {
         return;
     }
 

@@ -15,6 +15,7 @@ class ProductService
      * 建構式
      * 
      * @param \App\Repositories\ProductRepository $productRepository
+     * 
      * @return void
      */
     public function __construct(ProductRepository $productRepository)
@@ -27,7 +28,7 @@ class ProductService
      * 
      * @return array
      */
-    public function getAllProducts(): array
+    public function getAllProducts()
     {
         return $this->productRepository->getAllProducts();
     }

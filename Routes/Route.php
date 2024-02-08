@@ -27,7 +27,6 @@ class Route
      */
     private function __construct()
     {
-        
     }
 
     /**
@@ -35,7 +34,7 @@ class Route
      * 
      * @return static
      */
-    private static function getInstance(): static
+    private static function getInstance()
     {
         if (static::$instance === null) {
             static::$instance = new static();
@@ -50,14 +49,15 @@ class Route
      * @param string $url
      * @param array $action
      * @param string|null $method
+     * 
      * @return static
      */
-    private static function routing(string $url, array $action, ?string $method = null): static
+    private static function register(string $url, array $action, ?string $method = null)
     {
         static::$routes[] = [
-            'method' => $method ?? (Method::GET)->value, 
-            'url' => $url, 
-            'pattern' => '/^' . preg_replace(['/{[A-Za-z_]+}/', '/\//'], ['([0-9]+)', '\/'], $url) . '$/', 
+            'method' => $method ?? (Method::GET)->value,
+            'url' => $url,
+            'pattern' => '/^' . preg_replace(['/{[A-Za-z_]+}/', '/\//'], ['([0-9]+)', '\/'], $url) . '$/',
             'action' => $action
         ];
 
@@ -67,31 +67,33 @@ class Route
     /**
      * @param string $name
      * @param array $arguments
+     * 
      * @return mixed
+     * 
      * @throws \ReflectionException
      * @throws \Exception
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic(string $name, array $arguments)
     {
         $reflector = new ReflectionEnum(Method::class);
         $httpMethod = strtoupper($name);
-        
-        if (! $reflector->hasCase($httpMethod)) {
-            throw new Exception('Call to undefined method ' . Route::class . '::' . $name . '()');
+
+        if (!$reflector->hasCase($httpMethod)) {
+            throw new Exception('Call to undefined method ' . static::class . '::' . $name . '()');
         }
 
         try {
-            $reflector = new ReflectionMethod(static::class, 'routing');
+            $reflector = new ReflectionMethod(static::class, 'register');
         } catch (ReflectionException $e) {
             throw $e;
         }
 
         if (count($arguments) < $reflector->getNumberOfRequiredParameters()) {
-            throw new Exception('Must provide at least two parameters for routing');
+            throw new Exception('Must provide at least two parameters for registering routes');
         }
 
         foreach ($reflector->getParameters() as $i => $parameter) {
-            if (! isset($arguments[$i])) {
+            if (!isset($arguments[$i])) {
                 break;
             }
 
@@ -100,6 +102,6 @@ class Route
             }
         }
 
-        return static::routing(...array_merge($arguments, [$httpMethod]));
+        return static::register(...array_merge($arguments, [$httpMethod]));
     }
 }

@@ -13,14 +13,20 @@ class Provider
      * 取得類別實體物件
      * 
      * @param string $class
+     * 
      * @return object
+     * 
      * @throws \ReflectionException
      * @throws \Exception
      */
-    public static function getInstance(string $class): object
+    public static function getInstance(string $class)
     {
-        $reflector = new ReflectionClass($class);
-        
+        try {
+            $reflector = new ReflectionClass($class);
+        } catch (ReflectionException $e) {
+            throw $e;
+        }
+
         if (!$reflector->isInstantiable()) {
             throw new ReflectionException('The provided class is not instantiable');
         }

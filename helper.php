@@ -1,19 +1,21 @@
 <?php
 
-if (! function_exists('view')) {
+if (!function_exists('view')) {
     /**
      * 視覺視圖
      * 
      * @param string $view
      * @param array|null $datas
+     * 
      * @return void
+     * 
      * @throws \Exception
      */
-    function view(string $view, ?array $datas = null): void
+    function view(string $view, ?array $datas = null)
     {
         $viewFile = APP_URL . 'Views' . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $view) . '.php';
 
-        if (! file_exists($viewFile)) {
+        if (!file_exists($viewFile)) {
             throw new \Exception('The provided file of view does not exist');
         }
 
@@ -28,33 +30,35 @@ if (! function_exists('view')) {
     }
 }
 
-if (! function_exists('redirect')) {
+if (!function_exists('redirect')) {
     /**
      * 重導向
      * 
      * @param string $url
+     * 
      * @return void
      */
-    function redirect(string $url): void
+    function redirect(string $url)
     {
         header('Location: ' . $url);
         exit;
     }
 }
 
-if (! function_exists('env')) {
+if (!function_exists('env')) {
     /**
      * 讀取並取得 .env 檔案內容
      * 
      * @param string $key
      * @param mixed $default
+     * 
      * @return mixed
      */
-    function env(string $key, mixed $default = null): mixed
+    function env(string $key, mixed $default = null)
     {
         $envFilePath = ROOT_PATH . '.env';
 
-        if (! file_exists($envFilePath)) {
+        if (!file_exists($envFilePath)) {
             return $default;
         }
 
@@ -81,14 +85,15 @@ if (! function_exists('env')) {
     }
 }
 
-if (! function_exists('logging')) {
+if (!function_exists('logging')) {
     /**
      * 將訊息寫入 Log
      * 
      * @param string $message
+     * 
      * @return bool
      */
-    function logging(string $message): bool
+    function logging(string $message)
     {
         $message = '[' . date('Y-m-d H:i:s') . '] ' . $message . PHP_EOL;
 
@@ -100,27 +105,29 @@ if (! function_exists('logging')) {
     }
 }
 
-if (! function_exists('base64UrlEncode')) {
+if (!function_exists('base64UrlEncode')) {
     /**
      * 將字串做 base64 encode 處理
      * 
      * @param string $string
+     * 
      * @return string
      */
-    function base64UrlEncode(string $string): string
+    function base64UrlEncode(string $string)
     {
         return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($string));
     }
 }
 
-if (! function_exists('jwtGenerator')) {
+if (!function_exists('jwtGenerator')) {
     /**
      * 產生 JWT
      * 
      * @param string $secret
+     * 
      * @return string
      */
-    function jwtGenerator(string $secret): string
+    function jwtGenerator(string $secret)
     {
         $header = base64UrlEncode(json_encode(['alg' => 'HS256', 'typ' => 'JWT']));
         $payload = base64UrlEncode(json_encode(['role' => 'admin', 'exp' => time() + 3600 * 24 * 7]));
@@ -129,16 +136,18 @@ if (! function_exists('jwtGenerator')) {
     }
 }
 
-if (! function_exists('jwtVerify')) {
+if (!function_exists('jwtVerify')) {
     /**
      * 驗證 JWT
      * 
      * @param string $token
      * @param string $secret
+     * 
      * @return bool
+     * 
      * @throws \Exception
      */
-    function jwtVerify(string $token, string $secret): bool
+    function jwtVerify(string $token, string $secret)
     {
         $tokenInfos = explode('.', $token);
 
@@ -149,7 +158,7 @@ if (! function_exists('jwtVerify')) {
         [$encodedHeader, $encodedPayload, $encodedSignature] = $tokenInfos;
         $originalPayload = json_decode(base64_decode($encodedPayload), true);
 
-        if (! isset($originalPayload['exp']) || $originalPayload['exp'] <= time()) {
+        if (!isset($originalPayload['exp']) || $originalPayload['exp'] <= time()) {
             return false;
         }
 

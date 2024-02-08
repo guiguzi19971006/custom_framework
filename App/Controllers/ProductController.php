@@ -15,6 +15,7 @@ class ProductController extends Controller
      * 建構式
      * 
      * @param \App\Services\ProductService $productService
+     * 
      * @return void
      */
     public function __construct(ProductService $productService)
@@ -27,7 +28,7 @@ class ProductController extends Controller
      * 
      * @return void
      */
-    public function index(): void
+    public function index()
     {
         $products = $this->productService->getAllProducts();
         view('product.index', ['products' => $products]);
@@ -37,9 +38,10 @@ class ProductController extends Controller
      * 單一商品頁
      * 
      * @param string $productId
+     * 
      * @return void
      */
-    public function show(string $productId): void
+    public function show(string $productId)
     {
         view('product.show', ['productId' => $productId]);
     }

@@ -1,10 +1,12 @@
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>首頁</title>
 </head>
+
 <body>
     <h1>商品列表</h1>
     <table>
@@ -26,4 +28,5 @@
         </tbody>
     </table>
 </body>
+
 </html>

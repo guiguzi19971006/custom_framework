@@ -9,7 +9,7 @@ class ProductRepository
      * 
      * @return array
      */
-    public function getAllProducts(): array
+    public function getAllProducts()
     {
         $products = [
             [

@@ -11,7 +11,7 @@ class UserController extends Controller
      * 
      * @return void
      */
-    public function index(): void
+    public function index()
     {
         echo '456';
     }
