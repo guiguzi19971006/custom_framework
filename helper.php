@@ -53,20 +53,22 @@ if (!function_exists('env')) {
      * @param mixed $default
      * 
      * @return mixed
+     * 
+     * @throws \Exception
      */
     function env(string $key, mixed $default = null)
     {
         $envFilePath = ROOT_PATH . '.env';
 
         if (!file_exists($envFilePath)) {
-            return $default;
+            throw new \Exception("The [$envFilePath] does not exist");
         }
 
         if (($envFileContents = file_get_contents($envFilePath)) === false) {
             return $default;
         }
 
-        $eachLineContent = explode(PHP_EOL, $envFileContents);
+        $eachLineContent = explode(PHP_EOL, trim($envFileContents));
 
         foreach ($eachLineContent as $lineContent) {
             $content = explode('=', trim($lineContent));
@@ -85,7 +87,7 @@ if (!function_exists('env')) {
     }
 }
 
-if (!function_exists('logging')) {
+if (!function_exists('logToFile')) {
     /**
      * 將訊息寫入 Log
      * 
@@ -93,7 +95,7 @@ if (!function_exists('logging')) {
      * 
      * @return bool
      */
-    function logging(string $message)
+    function logToFile(string $message)
     {
         $message = '[' . date('Y-m-d H:i:s') . '] ' . $message . PHP_EOL;
 
@@ -144,15 +146,13 @@ if (!function_exists('jwtVerify')) {
      * @param string $secret
      * 
      * @return bool
-     * 
-     * @throws \Exception
      */
     function jwtVerify(string $token, string $secret)
     {
         $tokenInfos = explode('.', $token);
 
         if (count($tokenInfos) < 3) {
-            throw new \Exception('The provided JWT is invalid');
+            return false;
         }
 
         [$encodedHeader, $encodedPayload, $encodedSignature] = $tokenInfos;

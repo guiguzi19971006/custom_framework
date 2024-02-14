@@ -7,6 +7,6 @@ set_exception_handler(function (\Throwable $ex) {
         'file' => $ex->getFile(),
         'line' => $ex->getLine(),
     ];
-    logging($ex);
+    logToFile($ex);
     view('exception', ['exception' => $exception]);
 });
