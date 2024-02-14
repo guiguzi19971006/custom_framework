@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Containers\Container;
 use ReflectionClass;
+use ReflectionNamedType;
 use ReflectionException;
 use Exception;
 
@@ -38,14 +39,14 @@ class Provider
         $params = [];
 
         foreach ($constructor->getParameters() as $param) {
-            if (($paramType = $param->getType()) === null) {
-                throw new Exception('All parameters of ' . $reflector->getName() . '::' . $constructor->getName() . '() must give a specific type');
+            if (($paramType = $param->getType()) === null || !($paramType instanceof ReflectionNamedType)) {
+                throw new Exception("The parameters' types of $class::__construct() must be set as named type");
             }
 
             $paramTypeName = $paramType->getName();
 
             if (!in_array($paramTypeName, Container::$bindings['services']) && !in_array($paramTypeName, Container::$bindings['repositories'])) {
-                throw new Exception('Parameters\' type of ' . $reflector->getName() . '::' . $constructor->getName() . ' are not registered in container');
+                throw new Exception("The class [$paramTypeName] are not registered in container");
             }
 
             $params[] = static::getInstance($paramTypeName);
