@@ -33,7 +33,6 @@ class Bootstrapping
             throw new Exception('Route must provide controller and method');
         }
 
-        $url['action'] = array_values($url['action']);
         preg_match($url['pattern'], $currentUrl, $params);
         call_user_func_array([Provider::getInstance($url['action'][0]), $url['action'][1]], array_slice($params, 1));
     }
