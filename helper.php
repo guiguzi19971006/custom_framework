@@ -6,12 +6,13 @@ if (!function_exists('view')) {
      * 
      * @param string $view
      * @param array|null $datas
+     * @param bool $preserve
      * 
-     * @return void
+     * @return string
      * 
      * @throws \Exception
      */
-    function view(string $view, ?array $datas = null)
+    function view(string $view, ?array $datas = null, bool $preserve = false)
     {
         $viewFile = APP_URL . 'Views' . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $view) . '.php';
 
@@ -24,6 +25,12 @@ if (!function_exists('view')) {
                 global $$key;
                 $$key = $value;
             }
+        }
+
+        if ($preserve === true) {
+            ob_start();
+            require_once $viewFile;
+            return ob_get_clean();
         }
 
         require_once $viewFile;
