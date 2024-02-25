@@ -58,7 +58,7 @@ class Route
             'method' => $method ?? (Method::GET)->value,
             'url' => $url,
             'pattern' => '/^' . preg_replace(['/{[A-Za-z_]+}/', '/\//'], ['([0-9]+)', '\/'], $url) . '$/',
-            'action' => $action
+            'action' => array_values($action)
         ];
 
         return static::getInstance();
