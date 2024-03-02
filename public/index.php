@@ -10,8 +10,11 @@ require_once '../helper.php';
 require_once '../error_handler.php';
 require_once '../exception_handler.php';
 require_once '../autoload.php';
+require_once '../shutdown.php';
 require_once '../routes.php';
 
+use Database\DB;
 use App\Bootstrap\Bootstrapping;
 
+DB::getInstance()->connect();
 Bootstrapping::init();
