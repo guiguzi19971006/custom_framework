@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Database\DB;
+
 class ProductRepository
 {
     /**
@@ -11,24 +13,7 @@ class ProductRepository
      */
     public function getAllProducts()
     {
-        $products = [
-            [
-                'id' => 1,
-                'name' => '商品一',
-                'price' => 990
-            ],
-            [
-                'id' => 2,
-                'name' => '商品二',
-                'price' => 1490
-            ],
-            [
-                'id' => 3,
-                'name' => '商品三',
-                'price' => 1990
-            ]
-        ];
-
-        return $products;
+        $query = 'select * from `product`;';
+        return DB::getInstance()->statement($query)->get();
     }
 }
