@@ -10,14 +10,4 @@ class Product extends Model
      * @var string
      */
     private string $table = 'product';
-
-    /**
-     * 建構式
-     * 
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 }
