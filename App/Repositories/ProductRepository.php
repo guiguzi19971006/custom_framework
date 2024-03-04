@@ -13,7 +13,7 @@ class ProductRepository
      */
     public function getAllProducts()
     {
-        $query = 'select * from `product`;';
-        return DB::getInstance()->statement($query)->get();
+        $query = 'select * from `product`';
+        return DB::getInstance()->query($query)->get();
     }
 }
