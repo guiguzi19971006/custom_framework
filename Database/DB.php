@@ -72,7 +72,7 @@ class DB
      * 
      * @return static
      */
-    public function statement(string $statement, ?array $params = null)
+    public function query(string $statement, ?array $params = null)
     {
         $this->stmt = $this->pdo->prepare($statement);
         $this->stmt->execute($params);
