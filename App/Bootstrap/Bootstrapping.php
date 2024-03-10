@@ -17,7 +17,7 @@ class Bootstrapping
      */
     public static function init()
     {
-        $currentUrl = str_replace('/index.php', '', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'] : strstr($_SERVER['REQUEST_URI'], '?', true));
+        $currentUrl = str_replace('/public/index.php', '', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'] : strstr($_SERVER['REQUEST_URI'], '?', true));
         $mappingUrls = array_filter(Route::$routes, function ($route) use ($currentUrl) {
             return (bool) preg_match($route['pattern'], $currentUrl);
         });
