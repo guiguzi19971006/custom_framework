@@ -5,6 +5,7 @@ namespace Database;
 use App\Traits\Singleton;
 use PDO;
 use Exception;
+use ReflectionEnum;
 
 class DB
 {
@@ -70,13 +71,12 @@ class DB
      * @param string $statement
      * @param array|null $params
      * 
-     * @return static
+     * @return static|false
      */
     public function query(string $statement, ?array $params = null)
     {
         $this->stmt = $this->pdo->prepare($statement);
-        $this->stmt->execute($params);
-        return $this;
+        return $this->stmt->execute($params) ? $this : false;
     }
 
     /**
@@ -109,5 +109,29 @@ class DB
         }
 
         return $datas ?: null;
+    }
+
+    /**
+     * @param string $name
+     * @param array $arguments
+     * 
+     * @return bool
+     * 
+     * @throws \Exception
+     */
+    public static function __callStatic(string $name, array $arguments)
+    {
+        $reflector = new ReflectionEnum(Transaction::class);
+
+        if (!$reflector->hasCase(strtoupper($name))) {
+            throw new Exception('Call to undefined method ' . static::class . '::' . $name . '()');
+        }
+
+        $statement = match (strtolower($name)) {
+            (Transaction::TRANSACTION)->value => 'start transaction',
+            (Transaction::ROLLBACK)->value => 'rollback',
+            (Transaction::COMMIT)->value => 'commit'
+        };
+        return static::getInstance()->query($statement) !== false;
     }
 }
