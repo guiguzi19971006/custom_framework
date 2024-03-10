@@ -26,7 +26,7 @@ class ProductService
     /**
      * 取得所有產品
      * 
-     * @return array
+     * @return array|null
      */
     public function getAllProducts()
     {

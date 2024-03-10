@@ -9,11 +9,11 @@ class ProductRepository
     /**
      * 取得所有產品
      * 
-     * @return array
+     * @return array|null
      */
     public function getAllProducts()
     {
-        $query = 'select * from `product`';
-        return DB::getInstance()->query($query)->get();
+        $statement = 'select * from `product`';
+        return ($db = DB::getInstance()->query($statement)) === false ? null : $db->get();
     }
 }

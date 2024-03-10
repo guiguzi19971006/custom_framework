@@ -18,12 +18,14 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($products as ['id' => $id, 'name' => $name, 'price' => $price]) { ?>
-                <tr>
-                    <td><?php echo $id; ?></td>
-                    <td><?php echo $name; ?></td>
-                    <td><?php echo $price; ?></td>
-                </tr>
+            <?php if (isset($products)) { ?>
+                <?php foreach ($products as ['id' => $id, 'name' => $name, 'price' => $price]) { ?>
+                    <tr>
+                        <td><?php echo $id; ?></td>
+                        <td><?php echo $name; ?></td>
+                        <td><?php echo $price; ?></td>
+                    </tr>
+                <?php } ?>
             <?php } ?>
         </tbody>
     </table>
