@@ -3,6 +3,7 @@
 namespace Database;
 
 use App\Traits\Singleton;
+use App\Enums\Database\Transaction;
 use PDO;
 use Exception;
 use ReflectionEnum;

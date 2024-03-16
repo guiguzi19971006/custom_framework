@@ -1,6 +1,6 @@
 <?php
 
-namespace Database;
+namespace App\Enums\Database;
 
 enum Transaction: string
 {

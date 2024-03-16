@@ -2,7 +2,7 @@
 
 namespace Routes;
 
-use App\Http\Method;
+use App\Enums\Http\Method;
 use App\Traits\Singleton;
 use ReflectionEnum;
 use ReflectionMethod;
