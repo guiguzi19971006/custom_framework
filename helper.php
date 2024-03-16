@@ -14,7 +14,7 @@ if (!function_exists('view')) {
      */
     function view(string $view, ?array $datas = null, bool $preserve = false)
     {
-        $viewFile = APP_URL . 'Views' . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $view) . '.php';
+        $viewFile = APP_PATH . 'Views' . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $view) . '.php';
 
         if (!file_exists($viewFile)) {
             throw new \Exception('The provided file of view does not exist');
@@ -106,7 +106,7 @@ if (!function_exists('logToFile')) {
     {
         $message = '[' . date('Y-m-d H:i:s') . '] ' . $message . PHP_EOL;
 
-        if (file_put_contents(APP_URL . 'Logs' . DIRECTORY_SEPARATOR . date('Y-m-d') . '.log', $message, FILE_APPEND) === false) {
+        if (file_put_contents(STORAGE_PATH . 'logs' . DIRECTORY_SEPARATOR . date('Y-m-d') . '.log', $message, FILE_APPEND) === false) {
             return false;
         }
 
