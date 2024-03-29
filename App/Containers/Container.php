@@ -43,7 +43,7 @@ class Container
         }
 
         $concrete = static::$bindings[$abstract];
-        return $concrete();
+        return $concrete(static::class);
     }
 
     /**
@@ -58,10 +58,6 @@ class Container
      */
     public static function resolve(string $abstract)
     {
-        if (isset(static::$bindings[$abstract]) && is_callable($concrete = static::$bindings[$abstract])) {
-            $concrete();
-        }
-
         try {
             $classReflector = new ReflectionClass($abstract);
         } catch (ReflectionException $e) {
@@ -99,7 +95,14 @@ class Container
                 throw new Exception("Built-in type of parameter [$" . $parameterReflector->getName() . "] of [" . $abstract . "::" . $methodReflector->getName() . "()] must have a default value");
             }
 
-            $parameters[] = static::resolve($typeReflector->getName());
+            $typeName = $typeReflector->getName();
+
+            if (isset(static::$bindings[$typeName])) {
+                $parameters[] = static::get($typeName);
+                continue;
+            }
+
+            $parameters[] = static::resolve($typeName);
         }
 
         return $classReflector->newInstanceArgs($parameters);
