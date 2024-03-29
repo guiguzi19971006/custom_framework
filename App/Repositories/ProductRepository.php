@@ -14,6 +14,6 @@ class ProductRepository
     public function getAllProducts()
     {
         $statement = 'select * from `product`';
-        return ($db = DB::getInstance()->query($statement)) === false ? null : $db->get();
+        return ($db = DB::query($statement)) === false ? null : $db->get();
     }
 }
