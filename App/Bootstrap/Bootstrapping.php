@@ -2,7 +2,7 @@
 
 namespace App\Bootstrap;
 
-use App\Providers\Provider;
+use App\Containers\Container;
 use Routes\Route;
 use Exception;
 
@@ -34,6 +34,6 @@ class Bootstrapping
         }
 
         preg_match($url['pattern'], $currentUrl, $params);
-        call_user_func_array([Provider::getInstance($url['action'][0]), $url['action'][1]], array_slice($params, 1));
+        call_user_func_array([Container::resolve($url['action'][0]), $url['action'][1]], array_slice($params, 1));
     }
 }
