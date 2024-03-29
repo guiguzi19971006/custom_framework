@@ -88,11 +88,11 @@ class Container
             $typeReflector = $parameterReflector->getType();
 
             if ($typeReflector === null || !($typeReflector instanceof ReflectionNamedType)) {
-                throw new Exception("Parameter [$" . $parameterReflector->getName() . "] of [" . $abstract . "::" . $methodReflector->getName() . "()] must be specified as named type");
+                throw new Exception("Parameter $" . $parameterReflector->getName() . " of " . $abstract . "::" . $methodReflector->getName() . "() must be specified as named type");
             }
 
             if ($typeReflector->isBuiltin()) {
-                throw new Exception("Built-in type of parameter [$" . $parameterReflector->getName() . "] of [" . $abstract . "::" . $methodReflector->getName() . "()] must have a default value");
+                throw new Exception("Built-in type of parameter $" . $parameterReflector->getName() . " of " . $abstract . "::" . $methodReflector->getName() . "() must have a default value");
             }
 
             $typeName = $typeReflector->getName();
