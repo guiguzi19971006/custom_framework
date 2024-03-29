@@ -12,12 +12,14 @@ trait Singleton
     /**
      * 建立類別實體物件
      * 
+     * @param mixed $arguments
+     * 
      * @return static
      */
-    public static function getInstance()
+    public static function getInstance(...$arguments)
     {
         if (!isset(static::$instance)) {
-            static::$instance = new static();
+            static::$instance = new static(...$arguments);
         }
 
         return static::$instance;
