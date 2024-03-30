@@ -2,9 +2,6 @@
 
 namespace App\Providers;
 
-use App\Containers\Container;
-use Exception;
-
 abstract class Provider
 {
     /**
