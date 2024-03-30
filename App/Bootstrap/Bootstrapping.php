@@ -4,7 +4,9 @@ namespace App\Bootstrap;
 
 use App\Containers\Container;
 use Routes\Route;
+use ReflectionClass;
 use Exception;
+use ReflectionException;
 
 class Bootstrapping
 {
@@ -35,5 +37,32 @@ class Bootstrapping
 
         preg_match($url['pattern'], $currentUrl, $params);
         call_user_func_array([Container::resolve($url['action'][0]), $url['action'][1]], array_slice($params, 1));
+    }
+
+    /**
+     * 註冊服務
+     * 
+     * @param array $providers
+     * 
+     * @return void
+     * 
+     * @throws \Exception
+     * @throws \ReflectionException
+     */
+    public static function services(array $providers)
+    {
+        foreach ($providers as $provider) {
+            try {
+                $classReflector = new ReflectionClass($provider);
+            } catch (ReflectionException $e) {
+                throw $e;
+            }
+        
+            if (!$classReflector->hasMethod('bind')) {
+                throw new Exception("$provider::bind() does not exist");
+            }
+        
+            $provider::bind();
+        }
     }
 }
