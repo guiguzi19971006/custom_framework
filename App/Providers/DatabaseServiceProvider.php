@@ -6,14 +6,14 @@ use App\Containers\Container;
 use App\Utilities\DB;
 use PDO;
 
-class DatabaseProvider extends Provider
+class DatabaseServiceProvider extends ServiceProvider
 {
     /**
      * 綁定服務
      * 
      * @return void
      */
-    public static function bind()
+    public static function register()
     {
         // 綁定 PDO
         Container::bind(PDO::class, function () {

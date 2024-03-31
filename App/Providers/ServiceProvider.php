@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-abstract class Provider
+abstract class ServiceProvider
 {
     /**
      * 綁定服務
      * 
      * @return void
      */
-    abstract public static function bind();
+    abstract public static function register();
 }

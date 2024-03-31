@@ -3,6 +3,6 @@
 return [
     // List classes of service providers
     'providers' => [
-        \App\Providers\DatabaseProvider::class
+        \App\Providers\DatabaseServiceProvider::class
     ]
 ];
