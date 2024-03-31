@@ -49,7 +49,7 @@ class Bootstrapping
      * @throws \Exception
      * @throws \ReflectionException
      */
-    public static function services(array $providers)
+    public static function registerServices(array $providers)
     {
         foreach ($providers as $provider) {
             try {
@@ -58,11 +58,11 @@ class Bootstrapping
                 throw $e;
             }
         
-            if (!$classReflector->hasMethod('bind')) {
-                throw new Exception("$provider::bind() does not exist");
+            if (!$classReflector->hasMethod('register')) {
+                throw new Exception("$provider::register() does not exist");
             }
         
-            $provider::bind();
+            $provider::register();
         }
     }
 }
