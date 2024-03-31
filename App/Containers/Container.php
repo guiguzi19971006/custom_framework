@@ -73,7 +73,7 @@ class Container
         }
 
         $parameterReflectors = $methodReflector->getParameters();
-        $parameters = [];
+        $dependencies = [];
 
         foreach ($parameterReflectors as $parameterReflector) {
             if ($parameterReflector->isVariadic()) {
@@ -81,7 +81,7 @@ class Container
             }
 
             if ($parameterReflector->isDefaultValueAvailable()) {
-                $parameters[] = $parameterReflector->getDefaultValue();
+                $dependencies[] = $parameterReflector->getDefaultValue();
                 continue;
             }
 
@@ -98,13 +98,13 @@ class Container
             $typeName = $typeReflector->getName();
 
             if (isset(static::$bindings[$typeName])) {
-                $parameters[] = static::get($typeName);
+                $dependencies[] = static::get($typeName);
                 continue;
             }
 
-            $parameters[] = static::resolve($typeName);
+            $dependencies[] = static::resolve($typeName);
         }
 
-        return $classReflector->newInstanceArgs($parameters);
+        return $classReflector->newInstanceArgs($dependencies);
     }
 }
