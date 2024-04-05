@@ -58,7 +58,7 @@ class Bootstrapping
                 throw $e;
             }
         
-            if (!$classReflector->hasMethod('register')) {
+            if (!$classReflector->hasMethod('register') || !$classReflector->getMethod('register')->isStatic()) {
                 throw new Exception("$provider::register() does not exist");
             }
         
