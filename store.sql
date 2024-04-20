@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： mysql
--- 產生時間： 2024 年 04 月 20 日 07:43
+-- 產生時間： 2024 年 04 月 20 日 13:44
 -- 伺服器版本： 8.3.0
 -- PHP 版本： 8.2.17
 
@@ -45,7 +45,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `product_category_id`, `name`, `price`, `photo`, `remaining_qty`, `is_sellable`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'ES759', 490, 'public/images/products/ES759 .gif', 99, 1, '2024-03-02 17:30:21', '2024-04-20 07:43:02', NULL);
+(1, 1, 'ES759', 490, 'images/products/ES759 .gif', 99, 1, '2024-03-02 17:30:21', '2024-04-20 13:44:15', NULL);
 
 -- --------------------------------------------------------
 
