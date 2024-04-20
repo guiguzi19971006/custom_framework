@@ -13,7 +13,7 @@ class ProductRepository
      */
     public function getAllProducts()
     {
-        $statement = 'select * from `product`';
+        $statement = 'select * from `product` order by `updated_at` desc';
         return ($db = DB::query($statement)) === false ? null : $db->get();
     }
 }
