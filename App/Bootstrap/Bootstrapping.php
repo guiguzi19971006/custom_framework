@@ -19,9 +19,8 @@ class Bootstrapping
      */
     public static function init()
     {
-        $entryPointPath = '/public/index.php';
         $projectDirectoryName = substr(strrchr(substr(ROOT_PATH, 0, strlen(ROOT_PATH) - 1), DIRECTORY_SEPARATOR), 1);
-        $currentUrl = str_replace((strpos($_SERVER['REQUEST_URI'], $projectDirectoryName) === false ? '' : '/' . $projectDirectoryName) . (strpos($_SERVER['REQUEST_URI'], $entryPointPath) === false ? '' : $entryPointPath), '', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'] : strstr($_SERVER['REQUEST_URI'], '?', true));
+        $currentUrl = str_replace((strpos($_SERVER['REQUEST_URI'], $projectDirectoryName) === false ? '' : '/' . $projectDirectoryName) . (strpos($_SERVER['REQUEST_URI'], ENTRY_POINT_PATH) === false ? '' : ENTRY_POINT_PATH), '', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'] : strstr($_SERVER['REQUEST_URI'], '?', true));
         $mappingUrls = array_filter(Route::$routes, function ($route) use ($currentUrl) {
             return (bool) preg_match($route['pattern'], $currentUrl);
         });
