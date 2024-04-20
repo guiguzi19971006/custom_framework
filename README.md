@@ -5,3 +5,4 @@
 2. Apache 2.4.29
 3. PHP 8.3.4
 4. MySQL latest version
+5. Redis latest version
