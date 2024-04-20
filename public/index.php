@@ -6,6 +6,7 @@ defined('ROOT_PATH') || define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARAT
 defined('APP_PATH') || define('APP_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR);
 defined('PUBLIC_PATH') || define('PUBLIC_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 defined('STORAGE_PATH') || define('STORAGE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR);
+defined('ENTRY_POINT_PATH') || define('ENTRY_POINT_PATH', '/public/index.php');
 
 $config = require_once '../config.php';
 require_once '../helper.php';
