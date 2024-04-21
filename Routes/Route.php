@@ -2,9 +2,9 @@
 
 namespace Routes;
 
-use App\Enums\Http\Method;
+use App\Constants\Http\Method;
 use App\Traits\Singleton;
-use ReflectionEnum;
+use ReflectionClass;
 use ReflectionMethod;
 use ReflectionException;
 use Exception;
@@ -39,7 +39,7 @@ class Route
     private static function register(string $url, array $action, ?string $method = null)
     {
         static::$routes[] = [
-            'method' => $method ?? (Method::GET)->value,
+            'method' => $method ?? Method::GET,
             'url' => $url,
             'pattern' => '/^' . preg_replace(['/{[A-Za-z_]+}/', '/\//'], ['([0-9]+)', '\/'], $url) . '$/',
             'action' => array_values($action)
@@ -59,10 +59,10 @@ class Route
      */
     public static function __callStatic(string $name, array $arguments)
     {
-        $reflector = new ReflectionEnum(Method::class);
+        $reflector = new ReflectionClass(Method::class);
         $httpMethod = strtoupper($name);
 
-        if (!$reflector->hasCase($httpMethod)) {
+        if (!$reflector->hasConstant($httpMethod)) {
             throw new Exception('Call to undefined method ' . static::class . '::' . $name . '()');
         }
 
