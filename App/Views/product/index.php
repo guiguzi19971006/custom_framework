@@ -1,34 +1,51 @@
 <html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php view('components.header'); ?>
     <title>首頁</title>
 </head>
 
 <body>
-    <h1>商品列表</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>編號</th>
-                <th>名稱</th>
-                <th>價格</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (isset($products)) { ?>
-                <?php foreach ($products as ['id' => $id, 'name' => $name, 'price' => $price]) { ?>
-                    <tr>
-                        <td><?php echo $id; ?></td>
-                        <td><?php echo $name; ?></td>
-                        <td><?php echo $price; ?></td>
-                    </tr>
+    <?php view('components.navbar'); ?>
+
+    <main class="m-3">
+        <div class="main-title text-center">
+            <h1>商品列表</h1>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-dark">
+                    <th>圖片</th>
+                    <th>名稱</th>
+                    <th>價格</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (isset($products) && is_array($products)) { ?>
+                    <?php foreach ($products as ['id' => $id, 'photo' => $photo, 'name' => $name, 'price' => $price]) { ?>
+                        <tr>
+                            <td>
+                                <a href="/products/<?php echo $id; ?>">
+                                    <img src="<?php echo PUBLIC_PATH . '/' . $photo; ?>" alt="<?php echo $name; ?>">
+                                </a>
+                            </td>
+
+                            <td>
+                                <?php echo $name; ?>
+                            </td>
+
+                            <td>
+                                <?php echo $price; ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 <?php } ?>
-            <?php } ?>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </main>
+
+    <?php view('components.footer'); ?>
 </body>
 
 </html>
