@@ -92,15 +92,13 @@ class DB
             throw new Exception('Please execute SQL statement before get datas');
         }
 
-        $row = $this->stmt->fetch(PDO::FETCH_ASSOC);
-
         if ($isOnlyGettingFirstRow) {
-            return $row ?: null;
+            return $this->stmt->fetch(PDO::FETCH_ASSOC) ?: null;
         }
 
         $datas = [];
 
-        while ($row !== false) {
+        while (($row = $this->stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
             $datas[] = $row;
         }
 
