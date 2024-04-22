@@ -2,7 +2,7 @@
 
 <head>
     <?php view('components.header'); ?>
-    <title>首頁</title>
+    <title>商品列表</title>
 </head>
 
 <body>
