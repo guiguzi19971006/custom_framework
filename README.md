@@ -3,7 +3,7 @@
 ### 成果網站
 <a href="https://chun-hung.idv.tw" target="_blank">自製電子商務網站</a>
 
-### 安裝需求
+### 開發環境
 1. Linux(RedHat Enterprise Linux)
 2. Apache 2.4.29
 3. MySQL 5.6
