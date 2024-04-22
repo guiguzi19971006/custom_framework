@@ -12,7 +12,7 @@ $config = require_once '../config.php';
 require_once '../helper.php';
 require_once '../error_handler.php';
 require_once '../exception_handler.php';
-require_once '../autoload.php';
+require_once '../vendor/autoload.php';
 
 // 確認是否正確定義 Service Providers
 if (!isset($config['providers']) || !is_array($config['providers'])) {
