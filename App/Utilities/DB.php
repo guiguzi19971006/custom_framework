@@ -53,10 +53,17 @@ class DB
      * @param array|null $params
      * 
      * @return static|false
+     * 
+     * @throws \Exception
      */
     public function query(string $statement, ?array $params = null)
     {
         $this->stmt = $this->pdo->prepare($statement);
+
+        if ($this->stmt->execute($params) === false) {
+            throw new Exception('Failed to execute SQL statement');
+        }
+
         return $this->stmt->execute($params) ? $this : false;
     }
 
@@ -73,19 +80,27 @@ class DB
     /**
      * 取得查詢資料
      * 
+     * @param bool $isOnlyGettingFirstRow
+     * 
      * @return array|null
      * 
      * @throws \Exception
      */
-    public function get()
+    public function get(bool $isOnlyGettingFirstRow = false)
     {
         if (!isset($this->stmt)) {
             throw new Exception('Please execute SQL statement before get datas');
         }
 
+        $row = $this->stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($isOnlyGettingFirstRow) {
+            return $row ?: null;
+        }
+
         $datas = [];
 
-        while (($row = $this->stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
+        while ($row !== false) {
             $datas[] = $row;
         }
 
