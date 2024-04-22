@@ -14,6 +14,19 @@ class ProductRepository
     public function getAllProducts()
     {
         $statement = 'select * from `product` order by `updated_at` desc';
-        return ($db = DB::query($statement)) === false ? null : $db->get();
+        return DB::query($statement)->get();
+    }
+
+    /**
+     * 取得單一產品
+     * 
+     * @param string $productId
+     * 
+     * @return array|null
+     */
+    public function getProduct(string $productId)
+    {
+        $statement = 'select * from `product` where `id` = ? limit 1';
+        return DB::query($statement, [$productId])->get(true);
     }
 }

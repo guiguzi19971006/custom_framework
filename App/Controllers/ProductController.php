@@ -43,6 +43,13 @@ class ProductController extends Controller
      */
     public function show(string $productId)
     {
-        view('product.show', ['productId' => $productId]);
+        $product = $this->productService->getProduct($productId);
+
+        if ($product === null) {
+            header('HTTP/1.1 404 Not Found');
+            exit;
+        }
+
+        view('product.show', ['product' => $product]);
     }
 }

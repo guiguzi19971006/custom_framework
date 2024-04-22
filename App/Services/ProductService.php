@@ -32,4 +32,16 @@ class ProductService
     {
         return $this->productRepository->getAllProducts();
     }
+
+    /**
+     * 取得單一產品
+     * 
+     * @param string $productId
+     * 
+     * @return array|null
+     */
+    public function getProduct(string $productId)
+    {
+        return $this->productRepository->getProduct($productId);
+    }
 }
