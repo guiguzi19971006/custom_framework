@@ -26,7 +26,16 @@ class ProductRepository
      */
     public function getProduct(string $productId)
     {
-        $statement = 'select * from `product` where `id` = ? limit 1';
+        $statement = <<<'SQL_STATEMENT'
+            select
+                `product`.*,
+                `product_category`.`name` as `product_category_name`
+            from `product`
+            inner join `product_category`
+            on `product`.`product_category_id` = `product_category`.`id`
+            where `product`.`id` = ?
+            limit 1
+        SQL_STATEMENT;
         return DB::query($statement, [$productId])->get(true);
     }
 }
