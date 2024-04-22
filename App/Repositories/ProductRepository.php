@@ -26,7 +26,7 @@ class ProductRepository
      */
     public function getProduct(string $productId)
     {
-        $statement = <<<'SQL_STATEMENT'
+        $statement = <<< 'SQL_STATEMENT'
             select
                 `product`.*,
                 `product_category`.`name` as `product_category_name`
