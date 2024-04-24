@@ -3,7 +3,7 @@
 namespace App\Bootstrap;
 
 use App\Containers\Container;
-use Routes\Route;
+use App\Utilities\Route;
 use ReflectionClass;
 use Exception;
 use ReflectionException;
