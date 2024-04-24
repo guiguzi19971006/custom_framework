@@ -24,6 +24,7 @@ cp .env.example .env
 ```
 4. 填入所需屬性值至 .env
 ```
+# 專案名稱
 PROJECT_NAME=
 
 # 資料庫設定值
