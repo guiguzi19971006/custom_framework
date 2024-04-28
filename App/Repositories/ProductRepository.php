@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use Database\DB;
+use App\Supports\DB;
 
 class ProductRepository
 {
