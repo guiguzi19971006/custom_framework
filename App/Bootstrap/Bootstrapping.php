@@ -4,6 +4,7 @@ namespace App\Bootstrap;
 
 use App\Containers\Container;
 use App\Utilities\Route;
+use App\Constants\Http\Method;
 use ReflectionClass;
 use Exception;
 use ReflectionException;
@@ -19,10 +20,11 @@ class Bootstrapping
      */
     public static function init()
     {
+        $requestMethod = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : Method::GET;
         $projectDirectoryName = substr(strrchr(substr(ROOT_PATH, 0, strlen(ROOT_PATH) - 1), DIRECTORY_SEPARATOR), 1);
         $currentUrl = str_replace((strpos($_SERVER['REQUEST_URI'], $projectDirectoryName) === false ? '' : '/' . $projectDirectoryName) . (strpos($_SERVER['REQUEST_URI'], ENTRY_POINT_PATH) === false ? '' : ENTRY_POINT_PATH), '', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'] : strstr($_SERVER['REQUEST_URI'], '?', true));
-        $mappingUrls = array_filter(Route::$routes, function ($route) use ($currentUrl) {
-            return (bool) preg_match($route['pattern'], $currentUrl);
+        $mappingUrls = array_filter(Route::$routes, function ($route) use ($requestMethod, $currentUrl) {
+            return preg_match($route['pattern'], $currentUrl) && $requestMethod === $route['method'];
         });
 
         if (empty($mappingUrls)) {
