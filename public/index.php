@@ -19,6 +19,7 @@ if (!isset($config['providers']) || !is_array($config['providers'])) {
     throw new \Exception("Missing key 'providers' in " . dirname(__DIR__) . DIRECTORY_SEPARATOR . "config.php");
 }
 
+use App\Containers\Container;
 use App\Bootstrap\Bootstrapping;
 
 // 註冊服務
@@ -27,5 +28,7 @@ Bootstrapping::registerServices($config['providers']);
 require_once '../shutdown.php';
 require_once '../routes.php';
 
+$bootstrapping = Container::get(Bootstrapping::class);
+
 // 處理請求
-Bootstrapping::init();
+$bootstrapping->init();

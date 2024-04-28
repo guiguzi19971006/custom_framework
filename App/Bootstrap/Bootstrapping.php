@@ -4,13 +4,33 @@ namespace App\Bootstrap;
 
 use App\Containers\Container;
 use App\Utilities\Route;
-use App\Constants\Http\Method;
+use App\Requests\Request;
+use App\Traits\Singleton;
 use ReflectionClass;
 use Exception;
 use ReflectionException;
 
 class Bootstrapping
 {
+    use Singleton;
+
+    /**
+     * @var \App\Requests\Request
+     */
+    private $request;
+
+    /**
+     * 建構式
+     * 
+     * @param \App\Requests\Request $request
+     * 
+     * @return void
+     */
+    private function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     /**
      * 處理請求
      * 
@@ -18,13 +38,11 @@ class Bootstrapping
      * 
      * @throws \Exception
      */
-    public static function init()
+    public function init()
     {
-        $requestMethod = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : Method::GET;
-        $projectDirectoryName = substr(strrchr(substr(ROOT_PATH, 0, strlen(ROOT_PATH) - 1), DIRECTORY_SEPARATOR), 1);
-        $currentUrl = str_replace((strpos($_SERVER['REQUEST_URI'], $projectDirectoryName) === false ? '' : '/' . $projectDirectoryName) . (strpos($_SERVER['REQUEST_URI'], ENTRY_POINT_PATH) === false ? '' : ENTRY_POINT_PATH), '', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'] : strstr($_SERVER['REQUEST_URI'], '?', true));
-        $mappingUrls = array_filter(Route::$routes, function ($route) use ($requestMethod, $currentUrl) {
-            return preg_match($route['pattern'], $currentUrl) && $requestMethod === $route['method'];
+        [$requestMethod, $requestUrl] = [$this->request->method(), $this->request->url()];
+        $mappingUrls = array_filter(Route::$routes, function ($route) use ($requestMethod, $requestUrl) {
+            return preg_match($route['pattern'], $requestUrl) && $requestMethod === $route['method'];
         });
 
         if (empty($mappingUrls)) {
@@ -38,7 +56,7 @@ class Bootstrapping
             throw new Exception('Route must provide controller and method');
         }
 
-        preg_match($url['pattern'], $currentUrl, $params);
+        preg_match($url['pattern'], $requestUrl, $params);
         call_user_func_array([Container::resolve($url['action'][0]), $url['action'][1]], array_slice($params, 1));
     }
 
