@@ -2,4 +2,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /public/index.php/$1 [L]
-RewriteRule ^(?!public\/)(.*)$ - [R=403,NC,L]
+RewriteRule ^(?!public\/)(.*)$ - [R=404,NC,L]
