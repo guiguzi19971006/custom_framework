@@ -4,13 +4,13 @@ namespace App\Utilities;
 
 use App\Traits\Singleton;
 use App\Constants\Http\Method;
-use Routes\Route as Routing;
+use App\Supports\Route as RouteSupport;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionException;
 use Exception;
 
-class Route
+class Route extends Utility
 {
     use Singleton;
 
@@ -69,7 +69,7 @@ class Route
         $httpMethod = strtoupper($name);
 
         if (!$classReflector->hasConstant(strtoupper($httpMethod))) {
-            throw new Exception("Call to undefined method " . Routing::class . "::$name()");
+            throw new Exception("Call to undefined method " . RouteSupport::class . "::$name()");
         }
 
         try {

@@ -6,7 +6,7 @@ use App\Traits\Singleton;
 use PDO;
 use Exception;
 
-class DB
+class DB extends Utility
 {
     use Singleton;
 
