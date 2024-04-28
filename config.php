@@ -4,6 +4,7 @@ return [
     // List classes of service providers
     'providers' => [
         \App\Providers\DatabaseServiceProvider::class,
-        \App\Providers\RouteServiceProvider::class
+        \App\Providers\RouteServiceProvider::class,
+        \App\Providers\BootstrappingServiceProvider::class
     ]
 ];
