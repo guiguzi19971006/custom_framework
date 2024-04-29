@@ -3,9 +3,9 @@
 namespace App\Bootstrap;
 
 use App\Containers\Container;
-use App\Utilities\Route;
 use App\Requests\Request;
 use App\Traits\Singleton;
+use App\Middlewares\Middleware;
 use ReflectionClass;
 use Exception;
 use ReflectionException;
@@ -40,26 +40,14 @@ class Bootstrapping
      */
     public function init()
     {
-        [$requestMethod, $requestUrl] = [$this->request->method(), $this->request->url()];
-        $projectDirectoryName = substr(strrchr(substr(ROOT_PATH, 0, strlen(ROOT_PATH) - 1), DIRECTORY_SEPARATOR), 1);
-        $requestUrl = str_replace(ENTRY_POINT_PATH, '', str_replace('/' . $projectDirectoryName, '', $requestUrl));
-        $mappingUrls = array_filter(Route::$routes, function ($route) use ($requestMethod, $requestUrl) {
-            return preg_match($route['pattern'], $requestUrl) && $requestMethod === $route['method'];
-        });
+        $route = $this->request->handle();
 
-        if (empty($mappingUrls)) {
-            header('HTTP/1.1 404 Not Found');
-            exit;
+        if (isset($route['middlewares']) && is_array($route['middlewares'])) {
+            $this->filterRequest($route['middlewares']);
         }
 
-        $url = current($mappingUrls);
-
-        if (count($url['action']) < 2) {
-            throw new Exception('Route must provide controller and method');
-        }
-
-        preg_match($url['pattern'], $requestUrl, $params);
-        call_user_func_array([Container::resolve($url['action'][0]), $url['action'][1]], array_slice($params, 1));
+        preg_match($route['pattern'], $route['url'], $params);
+        call_user_func_array([Container::resolve($route['action'][0]), $route['action'][1]], array_slice($params, 1));
     }
 
     /**
@@ -86,6 +74,33 @@ class Bootstrapping
             }
         
             $provider::register();
+        }
+    }
+
+    /**
+     * 透過 Middlewares 過濾請求
+     * 
+     * @param array $middlewares
+     * 
+     * @return void
+     * 
+     * @throws \Exception
+     */
+    private function filterRequest(array $middlewares)
+    {
+        foreach ($middlewares as $middleware) {
+            if (!isset(Middleware::$routeMiddlewares[$middleware])) {
+                throw new Exception("Missing key '$middleware' in " . Middleware::class . '::$routeMiddlewares');
+            }
+
+            $middleware = Middleware::$routeMiddlewares[$middleware];
+            $classReflector = new ReflectionClass($middleware);
+
+            if (!$classReflector->hasMethod('handle') || !$classReflector->getMethod('handle')->isStatic()) {
+                throw new Exception("Call to undefined method $middleware::handle()");
+            }
+
+            $middleware::handle($this->request);
         }
     }
 }
