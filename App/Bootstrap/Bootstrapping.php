@@ -42,7 +42,7 @@ class Bootstrapping
     {
         [$requestMethod, $requestUrl] = [$this->request->method(), $this->request->url()];
         $projectDirectoryName = substr(strrchr(substr(ROOT_PATH, 0, strlen(ROOT_PATH) - 1), DIRECTORY_SEPARATOR), 1);
-        $requestUrl = $projectDirectoryName === strstr(substr($requestUrl, 1), '/', true) ? str_replace('/' . $projectDirectoryName, '', $requestUrl) : $requestUrl;
+        $requestUrl = str_replace(ENTRY_POINT_PATH, '', str_replace('/' . $projectDirectoryName, '', $requestUrl));
         $mappingUrls = array_filter(Route::$routes, function ($route) use ($requestMethod, $requestUrl) {
             return preg_match($route['pattern'], $requestUrl) && $requestMethod === $route['method'];
         });
