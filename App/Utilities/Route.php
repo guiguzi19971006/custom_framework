@@ -20,6 +20,17 @@ class Route extends Utility
     public static array $routes = [];
 
     /**
+     * @var string|null
+     */
+    private ?string $url = null;
+
+
+    /**
+     * @var array|null
+     */
+    private ?array $middlewares = null;
+
+    /**
      * 建構式
      * 
      * @return void
@@ -36,17 +47,51 @@ class Route extends Utility
      * @param string|null $method
      * 
      * @return static
+     * 
+     * @throws \Exception
      */
     private function register(string $url, array $action, ?string $method = null)
     {
-        static::$routes[] = [
-            'method' => $method ?? Method::GET,
-            'url' => $url,
+        if (count($action) < 2) {
+            throw new Exception('Route must provide controller and method');
+        }
+
+        $this->url = $url;
+        static::$routes[$this->url] = [
+            'method' => $method,
             'pattern' => '/^' . preg_replace(['/{[A-Za-z_]+}/', '/\//'], ['([0-9]+)', '\/'], $url) . '$/',
-            'action' => array_values($action)
+            'action' => array_values($action),
+            'middlewares' => $this->middlewares
         ];
+        return $this;
+    }
+
+    /**
+     * 定義路由所需的 Middlewares
+     * 
+     * @param array $middlewares
+     * 
+     * @return static
+     */
+    public function middleware(array $middlewares)
+    {
+        $this->middlewares = array_values($middlewares);
+
+        if (isset($this->url, static::$routes[$this->url])) {
+            static::$routes[$this->url]['middlewares'] = $this->middlewares;
+        }
 
         return $this;
+    }
+
+    /**
+     * 清除屬性
+     * 
+     * @return void
+     */
+    public function clear()
+    {
+        $this->url = $this->middlewares = null;
     }
 
     /**
