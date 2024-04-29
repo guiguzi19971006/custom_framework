@@ -24,11 +24,14 @@ class DatabaseServiceProvider extends ServiceProvider
             $user = env('DB_USER');
             $password = env('DB_PASSWORD');
             $dsn = "mysql:host=$host;port=$port;dbname=$name;charset=$charset";
-            return new PDO($dsn, $user, $password);
+            return DB::getInstance()->getPDOInstance($dsn, $user, $password);
         });
 
-        Container::bind(DB::class, function ($container) {
-            return DB::getInstance($container::get(PDO::class));
+        Container::bind(DB::class, function () {
+            // 連線至資料庫
+            Container::get(PDO::class);
+
+            return DB::getInstance();
         });
     }
 }
