@@ -27,13 +27,10 @@ class DB extends Utility
     /**
      * 建構式
      * 
-     * @param \PDO $pdo
-     * 
      * @return void
      */
-    private function __construct(PDO $pdo)
+    private function __construct()
     {
-        $this->pdo = $pdo;
     }
 
     /**
@@ -103,5 +100,23 @@ class DB extends Utility
         }
 
         return $datas ?: null;
+    }
+
+    /**
+     * 取得 PDO 類別實體物件
+     * 
+     * @param string $dsn
+     * @param string $user
+     * @param string $password
+     * 
+     * @return \PDO
+     */
+    public function getPDOInstance(string $dsn, string $user, string $password)
+    {
+        if (!isset($this->pdo)) {
+            $this->pdo = new PDO($dsn, $user, $password);
+        }
+
+        return $this->pdo;
     }
 }
