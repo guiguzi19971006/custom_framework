@@ -7,6 +7,15 @@ use App\Requests\Request;
 abstract class Middleware
 {
     /**
+     * 每個路由都會使用到的 Middlewares
+     * 
+     * @var array
+     */
+    public static array $middlewares = [];
+
+    /**
+     * 只有特定路由會使用到的 Middlewares
+     * 
      * @var array
      */
     public static array $routeMiddlewares = [

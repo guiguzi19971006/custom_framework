@@ -43,7 +43,7 @@ class Bootstrapping
         $route = $this->request->handle();
 
         if (isset($route['middlewares']) && is_array($route['middlewares'])) {
-            $this->filterRequest($route['middlewares']);
+            $this->filterRequest(array_merge(array_keys(Middleware::$middlewares), $route['middlewares']));
         }
 
         preg_match($route['pattern'], $route['url'], $params);
@@ -85,16 +85,22 @@ class Bootstrapping
      * @return void
      * 
      * @throws \Exception
+     * @throws \ReflectionException
      */
     private function filterRequest(array $middlewares)
     {
         foreach ($middlewares as $middleware) {
-            if (!isset(Middleware::$routeMiddlewares[$middleware])) {
-                throw new Exception("Missing key '$middleware' in " . Middleware::class . '::$routeMiddlewares');
+            if (!isset(Middleware::$middlewares[$middleware]) && !isset(Middleware::$routeMiddlewares[$middleware])) {
+                throw new Exception("Missing key '$middleware' in " . Middleware::class . '::$middlewares or ' . Middleware::class . '::$routeMiddlewares');
             }
 
-            $middleware = Middleware::$routeMiddlewares[$middleware];
-            $classReflector = new ReflectionClass($middleware);
+            $middleware = Middleware::$middlewares[$middleware] ?? Middleware::$routeMiddlewares[$middleware];
+
+            try {
+                $classReflector = new ReflectionClass($middleware);
+            } catch (ReflectionException $e) {
+                throw $e;
+            }
 
             if (!$classReflector->hasMethod('handle') || !$classReflector->getMethod('handle')->isStatic()) {
                 throw new Exception("Call to undefined method $middleware::handle()");
