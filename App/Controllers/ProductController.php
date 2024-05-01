@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\ProductService;
+use App\Requests\Request;
 
 class ProductController extends Controller
 {
@@ -26,9 +27,11 @@ class ProductController extends Controller
     /**
      * 所有商品頁
      * 
+     * @param \App\Requests\Request $request
+     * 
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = $this->productService->getAllProducts();
         view('product.index', ['products' => $products]);
@@ -38,10 +41,11 @@ class ProductController extends Controller
      * 單一商品頁
      * 
      * @param string $productId
+     * @param \App\Requests\Request $request
      * 
      * @return void
      */
-    public function show(string $productId)
+    public function show(string $productId, Request $request)
     {
         $product = $this->productService->getProduct($productId);
 
