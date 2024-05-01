@@ -113,7 +113,7 @@ class Route extends Utility
 
         $httpMethod = strtoupper($name);
 
-        if (!$classReflector->hasConstant(strtoupper($httpMethod))) {
+        if (!$classReflector->hasConstant($httpMethod)) {
             throw new Exception("Call to undefined method " . RouteSupport::class . "::$name()");
         }
 
