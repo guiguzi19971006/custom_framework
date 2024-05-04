@@ -119,4 +119,14 @@ class DB extends Utility
 
         return $this->pdo;
     }
+
+    /**
+     * @param string $name
+     * @param array $arguments
+     * 
+     * @return static
+     */
+    public function __call(string $name, array $arguments)
+    {
+    }
 }
