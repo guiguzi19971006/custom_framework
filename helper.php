@@ -14,7 +14,7 @@ if (!function_exists('view')) {
      */
     function view(string $view, ?array $datas = null, bool $preserve = false)
     {
-        $viewFile = APP_PATH . 'Views' . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $view) . '.php';
+        $viewFile = VIEW_PATH . str_replace('.', DIRECTORY_SEPARATOR, $view) . '.php';
 
         if (!file_exists($viewFile)) {
             throw new \Exception('The provided file of view does not exist');
@@ -176,5 +176,17 @@ if (!function_exists('jwtVerify')) {
         }
 
         return true;
+    }
+}
+
+if (!function_exists('sanitizeInput')) {
+    /**
+     * @param string $input
+     * 
+     * @return string
+     */
+    function sanitizeInput(string $input)
+    {
+        return htmlspecialchars($input, ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 }
