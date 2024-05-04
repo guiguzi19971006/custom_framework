@@ -4,7 +4,10 @@ namespace App\Requests;
 
 use App\Traits\Singleton;
 use App\Utilities\Route;
+use App\Constants\Http\Method;
+use ReflectionClass;
 use Exception;
+use ReflectionException;
 
 class Request
 {
@@ -25,6 +28,7 @@ class Request
      * @return string
      * 
      * @throws \Exception
+     * @throws \ReflectionException
      */
     public function method()
     {
@@ -32,7 +36,31 @@ class Request
             throw new Exception('Cannot get the request HTTP method');
         }
 
-        return strtoupper($_SERVER['REQUEST_METHOD']);
+        $httpMethod = strtoupper($_SERVER['REQUEST_METHOD']);
+
+        try {
+            $classReflector = new ReflectionClass(Method::class);
+        } catch (ReflectionException $e) {
+            throw $e;
+        }
+
+        if (!$classReflector->hasConstant($httpMethod)) {
+            throw new Exception("Unsupported the specified request HTTP method: $httpMethod");
+        }
+
+        if ($httpMethod !== Method::POST) {
+            return $httpMethod;
+        }
+
+        if (!isset($_POST['_method'])) {
+            return $httpMethod;
+        }
+
+        if (!in_array($httpMethod = strtoupper($_POST['_method']), [Method::PUT, Method::PATCH, Method::DELETE])) {
+            throw new Exception('Supported request HTTP methods: ' . implode(', ', [Method::PUT, Method::PATCH, Method::DELETE]));
+        }
+
+        return $httpMethod;
     }
 
     /**
@@ -99,5 +127,27 @@ class Request
         }
 
         return array_merge(current($mappingUrls), ['url' => $requestUrl]);
+    }
+
+    /**
+     * 取得 Query String 或 Request HTTP Body
+     * 
+     * @param string|null $key
+     * 
+     * @return array|string|null
+     */
+    public function input(?string $key = null)
+    {
+        if ($this->method() === Method::GET) {
+            $input = $_GET;
+        } else {
+            $input = $_POST;
+        }
+
+        if ($key === null) {
+            return $input;
+        }
+
+        return $input[$key] ?? null;
     }
 }
