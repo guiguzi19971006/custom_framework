@@ -40,12 +40,14 @@ class Bootstrapping
      */
     public function init()
     {
+        // 取得路由資訊
         $route = $this->request->handle();
 
-        if (isset($route['middlewares']) && is_array($route['middlewares'])) {
-            $this->filterRequest(array_merge(array_keys(Middleware::$middlewares), $route['middlewares']));
-        }
+        // 透過 Middleware 過濾請求
+        $middlewares = isset($route['middlewares']) && is_array($route['middlewares']) ? array_merge(array_keys(Middleware::$middlewares), $route['middlewares']) : array_keys(Middleware::$middlewares);
+        $this->filterRequest($middlewares);
 
+        // 處理請求
         preg_match($route['pattern'], $route['url'], $params);
         call_user_func_array([Container::resolve($route['action'][0]), $route['action'][1]], array_merge(array_slice($params, 1), [$this->request]));
     }
