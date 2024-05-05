@@ -26,11 +26,14 @@ class ProductService
     /**
      * 取得所有產品
      * 
+     * @param int $perPageRowNums
+     * @param int $offset
+     * 
      * @return array|null
      */
-    public function getAllProducts()
+    public function getAllProducts(int $perPageRowNums, int $offset = 0)
     {
-        return $this->productRepository->getAllProducts();
+        return $this->productRepository->getAllProducts($perPageRowNums, $offset);
     }
 
     /**

@@ -9,11 +9,19 @@ class ProductRepository
     /**
      * 取得所有產品
      * 
+     * @param int $perPageRowNums
+     * @param int $offset
+     * 
      * @return array|null
      */
-    public function getAllProducts()
+    public function getAllProducts(int $perPageRowNums, int $offset = 0)
     {
-        $statement = 'select * from `product` order by `updated_at` desc';
+        $statement = <<< SQL_STATEMENT
+            select * from `product`
+            order by `updated_at` desc
+            limit $perPageRowNums
+            offset $offset
+        SQL_STATEMENT;
         return DB::query($statement)->get();
     }
 
