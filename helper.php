@@ -181,6 +181,8 @@ if (!function_exists('jwtVerify')) {
 
 if (!function_exists('sanitizeInput')) {
     /**
+     * 將 HTML 中的特殊字元做編碼處理
+     * 
      * @param string $input
      * 
      * @return string
