@@ -6,6 +6,7 @@ use App\Services\ProductService;
 use App\Requests\Request;
 use App\Validators\Validator;
 use App\Forms\Pagination;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -38,9 +39,8 @@ class ProductController extends Controller
         $input = array_map(fn ($value) => sanitizeInput($value), $request->input());
         $input['page'] = $input['page'] ?? 1;
         $page = Validator::errors($input, Pagination::$patterns) === null ? $input['page'] : 1;
-        $perPageRowNums = 10;
-        $offset = $perPageRowNums * ($page - 1);
-        $products = $this->productService->getAllProducts($perPageRowNums, $offset);
+        $offset = Product::$perPageRowNums * ($page - 1);
+        $products = $this->productService->getAllProducts(Product::$perPageRowNums, $offset);
         view('product.index', ['products' => $products]);
     }
 
