@@ -5,9 +5,9 @@ namespace App\Models;
 class Product extends Model
 {
     /**
-     * 資料表名稱
+     * 每個頁面的資料列數
      * 
-     * @var string
+     * @var int
      */
-    private string $table = 'product';
+    public static int $perPageRowNums = 10;
 }
