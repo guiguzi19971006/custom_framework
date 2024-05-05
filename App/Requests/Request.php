@@ -133,10 +133,11 @@ class Request
      * 取得 Query String 或 Request HTTP Body
      * 
      * @param string|null $key
+     * @param mixed $default
      * 
      * @return array|string|null
      */
-    public function input(?string $key = null)
+    public function input(?string $key = null, mixed $default = null)
     {
         if ($this->method() === Method::GET) {
             $input = $_GET;
@@ -148,6 +149,6 @@ class Request
             return $input;
         }
 
-        return $input[$key] ?? null;
+        return $input[$key] ?? $default;
     }
 }
