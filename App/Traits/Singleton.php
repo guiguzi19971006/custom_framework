@@ -18,10 +18,6 @@ trait Singleton
      */
     public static function getInstance(...$arguments)
     {
-        if (!isset(static::$instance)) {
-            static::$instance = new static(...$arguments);
-        }
-
-        return static::$instance;
+        return static::$instance = static::$instance ?? new static(...$arguments);
     }
 }
