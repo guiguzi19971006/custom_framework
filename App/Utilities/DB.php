@@ -49,7 +49,7 @@ class DB extends Utility
      * @param string $statement
      * @param array|null $params
      * 
-     * @return static|false
+     * @return static
      * 
      * @throws \Exception
      */
@@ -58,10 +58,10 @@ class DB extends Utility
         $this->stmt = $this->pdo->prepare($statement);
 
         if ($this->stmt->execute($params) === false) {
-            throw new Exception('Failed to execute SQL statement');
+            throw new Exception('Failed to execute the SQL statement');
         }
 
-        return $this->stmt->execute($params) ? $this : false;
+        return $this;
     }
 
     /**
