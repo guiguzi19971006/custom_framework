@@ -18,7 +18,7 @@ class UserInterestingProductRepository
     {
         $statement = <<< 'SQL_STATEMENT'
             select
-                sum(`views_count`) as `views_count`,
+                sum(`viewed_count`) as `viewed_count`,
                 count(*) as `row_nums`
             from `user_interesting_product`
             where `product_id` = ?
@@ -27,7 +27,7 @@ class UserInterestingProductRepository
 
         if ($userInterestingProduct['row_nums'] < 1) {
             $statement = <<< 'SQL_STATEMENT'
-                insert into `user_interesting_product` (`user_id`, `product_id`, `views_count`)
+                insert into `user_interesting_product` (`user_id`, `product_id`, `viewed_count`)
                 values (?, ?, ?)
             SQL_STATEMENT;
             return DB::query($statement, [$userId, $productId, 1])->affectedRowNums();
@@ -35,9 +35,9 @@ class UserInterestingProductRepository
 
         $statement = <<< 'SQL_STATEMENT'
             update `user_interesting_product`
-            set `views_count` = ?
+            set `viewed_count` = ?
             where `product_id` = ?
         SQL_STATEMENT;
-        return DB::query($statement, [$userInterestingProduct['views_count'] + 1, $productId])->affectedRowNums();
+        return DB::query($statement, [$userInterestingProduct['viewed_count'] + 1, $productId])->affectedRowNums();
     }
 }
