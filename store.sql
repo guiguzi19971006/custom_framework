@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2024 年 05 月 10 日 00:01
+-- 產生時間： 2024 年 05 月 10 日 01:38
 -- 伺服器版本： 10.6.3-MariaDB-log
 -- PHP 版本： 7.0.33
 
@@ -140,7 +140,7 @@ CREATE TABLE `user_interesting_product` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT '使用者編號',
   `product_id` bigint(20) UNSIGNED NOT NULL COMMENT '產品編號',
-  `views_count` int(10) UNSIGNED NOT NULL COMMENT '產品被觀看次數',
+  `viewed_count` int(10) UNSIGNED NOT NULL COMMENT '產品被觀看次數',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '最後更新時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
@@ -149,7 +149,7 @@ CREATE TABLE `user_interesting_product` (
 -- 傾印資料表的資料 `user_interesting_product`
 --
 
-INSERT INTO `user_interesting_product` (`id`, `user_id`, `product_id`, `views_count`, `created_at`, `updated_at`) VALUES
+INSERT INTO `user_interesting_product` (`id`, `user_id`, `product_id`, `viewed_count`, `created_at`, `updated_at`) VALUES
 (1, NULL, 3, 2, '2024-05-09 16:00:23', '2024-05-09 16:00:44'),
 (2, NULL, 4, 2, '2024-05-09 16:00:58', '2024-05-09 16:01:04'),
 (3, NULL, 1, 1, '2024-05-09 16:01:13', '2024-05-09 16:01:13');
