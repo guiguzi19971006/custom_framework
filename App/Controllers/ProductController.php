@@ -7,6 +7,7 @@ use App\Requests\Request;
 use App\Validators\Validator;
 use App\Forms\Pagination;
 use App\Models\Product;
+use App\Services\UserInterestingProductService;
 
 class ProductController extends Controller
 {
@@ -16,15 +17,22 @@ class ProductController extends Controller
     private $productService;
 
     /**
+     * @var \App\Services\UserInterestingProductService
+     */
+    private $userInterestingProductService;
+
+    /**
      * 建構式
      * 
      * @param \App\Services\ProductService $productService
+     * @param \App\Services\UserInterestingProductService $userInterestingProductService
      * 
      * @return void
      */
-    public function __construct(ProductService $productService)
+    public function __construct(ProductService $productService, UserInterestingProductService $userInterestingProductService)
     {
         $this->productService = $productService;
+        $this->userInterestingProductService = $userInterestingProductService;
     }
 
     /**
@@ -59,6 +67,11 @@ class ProductController extends Controller
         if ($product === null) {
             header('HTTP/1.1 404 Not Found');
             exit;
+        }
+
+        // 新增或更新產品被觀看次數
+        if ($this->userInterestingProductService->createOrUpdateProductViewsCount($productId) < 1) {
+            logToFile('新增或更新產品被觀看次數失敗');
         }
 
         view('product.show', ['product' => $product]);
