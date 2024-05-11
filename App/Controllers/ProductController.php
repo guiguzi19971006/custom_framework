@@ -70,7 +70,7 @@ class ProductController extends Controller
         }
 
         // 新增或更新產品被觀看次數
-        if ($this->userInterestingProductService->createOrUpdateProductViewsCount($productId) < 1) {
+        if ($this->userInterestingProductService->createOrUpdateProductViewedCount($productId) < 1) {
             logToFile('新增或更新產品被觀看次數失敗');
         }
 

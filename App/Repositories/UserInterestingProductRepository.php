@@ -14,7 +14,7 @@ class UserInterestingProductRepository
      * 
      * @return int
      */
-    public function createOrUpdateProductViewsCount(int $productId, ?int $userId = null)
+    public function createOrUpdateProductViewedCount(int $productId, ?int $userId = null)
     {
         $statement = <<< 'SQL_STATEMENT'
             select

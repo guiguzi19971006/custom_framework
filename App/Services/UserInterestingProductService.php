@@ -31,8 +31,8 @@ class UserInterestingProductService
      * 
      * @return int
      */
-    public function createOrUpdateProductViewsCount(int $productId, ?int $userId = null)
+    public function createOrUpdateProductViewedCount(int $productId, ?int $userId = null)
     {
-        return $this->userInterestingProductRepository->createOrUpdateProductViewsCount($productId, $userId);
+        return $this->userInterestingProductRepository->createOrUpdateProductViewedCount($productId, $userId);
     }
 }
