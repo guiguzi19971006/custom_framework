@@ -9,5 +9,5 @@ class Product extends Model
      * 
      * @var int
      */
-    public static int $perPageRowNums = 5;
+    public static int $rowNumsPerPage = 5;
 }
