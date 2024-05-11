@@ -47,4 +47,16 @@ class ProductService
     {
         return $this->productRepository->getProduct($productId);
     }
+
+    /**
+     * 取得產品總數量
+     * 
+     * @param bool $isOnlyGettingUndeleted
+     * 
+     * @return int
+     */
+    public function getProductCount(bool $isOnlyGettingUndeleted = true)
+    {
+        return $this->productRepository->getProductCount();
+    }
 }

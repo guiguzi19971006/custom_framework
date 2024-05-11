@@ -46,4 +46,33 @@ class ProductRepository
         SQL_STATEMENT;
         return DB::query($statement, [$productId])->get(true);
     }
+
+    /**
+     * 取得產品總數量
+     * 
+     * @param bool $isOnlyGettingUndeleted
+     * 
+     * @return int
+     */
+    public function getProductCount(bool $isOnlyGettingUndeleted = true)
+    {
+        if ($isOnlyGettingUndeleted) {
+            $statement = <<< 'SQL_STATEMENT'
+                select
+                    count(*) as `row_nums`
+                from `product`
+                where `deleted_at` is null
+            SQL_STATEMENT;
+            $product = DB::query($statement)->get(true);
+            return $product['row_nums'];
+        }
+
+        $statement = <<< 'SQL_STATEMENT'
+            select
+                count(*) as `row_nums`
+            from `product`
+        SQL_STATEMENT;
+        $product = DB::query($statement)->get(true);
+        return $product['row_nums'];
+    }
 }
