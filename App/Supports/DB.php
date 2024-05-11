@@ -2,7 +2,7 @@
 
 namespace App\Supports;
 
-class DB extends Support
+final class DB extends Support
 {
     /**
      * @param string $name

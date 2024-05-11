@@ -5,7 +5,7 @@ namespace App\Supports;
 use App\Containers\Container;
 use App\Utilities\Route as RouteUtility;
 
-class Route extends Support
+final class Route extends Support
 {
     /**
      * @param string $name
