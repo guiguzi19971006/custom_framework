@@ -47,9 +47,10 @@ class ProductController extends Controller
         $input = array_map(fn ($value) => sanitizeInput($value), $request->input());
         $input['page'] = $input['page'] ?? 1;
         $page = Validator::errors($input, Pagination::$patterns) === null ? $input['page'] : 1;
-        $offset = Product::$perPageRowNums * ($page - 1);
-        $products = $this->productService->getAllProducts(Product::$perPageRowNums, $offset);
-        view('product.index', ['products' => $products]);
+        $offset = Product::$rowNumsPerPage * ($page - 1);
+        $products = $this->productService->getAllProducts(Product::$rowNumsPerPage, $offset);
+        $productRowNums = $this->productService->getProductCount();
+        view('product.index', ['products' => $products, 'productRowNums' => $productRowNums, 'totalPageNums' => ceil($productRowNums / Product::$rowNumsPerPage), 'currentPage' => (int) $page]);
     }
 
     /**

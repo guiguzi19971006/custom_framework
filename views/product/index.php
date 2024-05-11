@@ -40,9 +40,33 @@
                             </td>
                         </tr>
                     <?php } ?>
+                <?php } else { ?>
+                    <tr>
+                        <td class="text-center" colspan="3">暫無產品</td>
+                    </tr>
                 <?php } ?>
             </tbody>
         </table>
+
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="?page=1"><<|</a>
+            </li>
+            <li class="page-item">
+                    <a class="page-link" href="?page=<?php echo ($currentPage - 1) < 1 ? 1 : $currentPage - 1; ?>"><</a>
+                </li>
+            <?php for ($i = 1; $i <= $totalPageNums; $i++) { ?>
+                <li class="page-item<?php echo $i === $currentPage ? ' active' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                </li>
+            <?php } ?>
+            <li class="page-item">
+                    <a class="page-link" href="?page=<?php echo ($currentPage + 1) > $totalPageNums ? $totalPageNums : $currentPage + 1; ?>">></a>
+                </li>
+            <li class="page-item">
+                <a class="page-link" href="?page=<?php echo $totalPageNums; ?>">|>></a>
+            </li>
+        </ul>
     </main>
 
     <?php view('components.footer'); ?>
