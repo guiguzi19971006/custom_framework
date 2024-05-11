@@ -8,7 +8,7 @@
 <body>
     <?php view('components.navbar'); ?>
 
-    <main class="m-3">
+    <main class="m-5">
         <div class="main-title text-center">
             <h1>產品資訊</h1>
         </div>
