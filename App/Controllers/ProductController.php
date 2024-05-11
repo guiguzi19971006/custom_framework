@@ -70,9 +70,9 @@ class ProductController extends Controller
             exit;
         }
 
-        // 新增或更新產品被觀看次數
-        if ($this->userInterestingProductService->createOrUpdateProductViewedCount($productId) < 1) {
-            logToFile('新增或更新產品被觀看次數失敗');
+        // 新增產品被觀看次數
+        if ($this->userInterestingProductService->createProductViewedCount($productId) < 1) {
+            logToFile('新增產品被觀看次數失敗');
         }
 
         view('product.show', ['product' => $product]);
