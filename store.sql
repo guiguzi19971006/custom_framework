@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2024 年 05 月 10 日 01:38
+-- 產生時間： 2024 年 05 月 11 日 19:28
 -- 伺服器版本： 10.6.3-MariaDB-log
 -- PHP 版本： 7.0.33
 
@@ -47,7 +47,18 @@ INSERT INTO `product` (`id`, `product_category_id`, `name`, `price`, `photo`, `r
 (1, 1, 'ES759', 490, 'images/products/ES759 .gif', 99, 1, '2024-03-02 17:30:21', '2024-04-20 13:44:15', NULL),
 (2, 1, 'F0476 ', 590, 'images/products/F0476 .gif', 40, 1, '2024-05-05 16:13:55', '2024-05-05 16:13:55', NULL),
 (3, 1, 'F0752 ', 499, 'images/products/F0752 .gif', 14, 1, '2024-05-05 16:58:09', '2024-05-05 16:58:09', NULL),
-(4, 1, 'F1714 ', 650, 'images/products/F1714 .gif', 11, 1, '2024-05-05 17:13:19', '2024-05-05 17:13:19', NULL);
+(4, 1, 'F1714 ', 650, 'images/products/F1714 .gif', 11, 1, '2024-05-05 17:13:19', '2024-05-05 17:13:19', NULL),
+(5, 1, 'F2734 ', 479, 'images/products/F2734 .gif', 18, 1, '2024-05-11 10:41:42', '2024-05-11 10:41:42', NULL),
+(6, 1, 'F5474 ', 749, 'images/products/F5474 .gif', 10, 1, '2024-05-11 10:44:06', '2024-05-11 10:44:06', NULL),
+(7, 1, 'F6472 ', 449, 'images/products/F6472 .gif', 8, 1, '2024-05-11 11:08:28', '2024-05-11 11:08:28', NULL),
+(8, 1, 'F9754 ', 590, 'images/products/F9754 .gif', 17, 1, '2024-05-11 11:09:32', '2024-05-11 11:09:32', NULL),
+(9, 1, 'FT476 ', 359, 'images/products/FT476 .gif', 14, 1, '2024-05-11 11:10:51', '2024-05-11 11:10:51', NULL),
+(10, 1, 'FT499 ', 389, 'images/products/FT499 .gif', 9, 1, '2024-05-11 11:12:40', '2024-05-11 11:12:40', NULL),
+(11, 1, 'FT752 ', 389, 'images/products/FT752 .gif', 10, 1, '2024-05-11 11:13:40', '2024-05-11 11:13:40', NULL),
+(12, 1, 'P785  ', 389, 'images/products/P785  .gif', 21, 1, '2024-05-11 11:15:05', '2024-05-11 11:15:05', NULL),
+(13, 1, 'P789  ', 539, 'images/products/P789  .gif', 28, 1, '2024-05-11 11:15:48', '2024-05-11 11:15:48', NULL),
+(14, 1, 'S749  ', 599, 'images/products/S749  .gif', 15, 1, '2024-05-11 11:16:38', '2024-05-11 11:16:38', NULL),
+(15, 1, 'S752  ', 629, 'images/products/S752  .gif', 22, 1, '2024-05-11 11:17:32', '2024-05-11 11:17:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -150,9 +161,13 @@ CREATE TABLE `user_interesting_product` (
 --
 
 INSERT INTO `user_interesting_product` (`id`, `user_id`, `product_id`, `viewed_count`, `created_at`, `updated_at`) VALUES
-(1, NULL, 3, 2, '2024-05-09 16:00:23', '2024-05-09 16:00:44'),
-(2, NULL, 4, 2, '2024-05-09 16:00:58', '2024-05-09 16:01:04'),
-(3, NULL, 1, 1, '2024-05-09 16:01:13', '2024-05-09 16:01:13');
+(1, NULL, 3, 3, '2024-05-09 16:00:23', '2024-05-11 10:18:17'),
+(2, NULL, 4, 3, '2024-05-09 16:00:58', '2024-05-09 17:41:01'),
+(3, NULL, 1, 4, '2024-05-09 16:01:13', '2024-05-11 11:26:53'),
+(4, NULL, 2, 3, '2024-05-09 17:40:37', '2024-05-11 10:36:14'),
+(5, NULL, 5, 3, '2024-05-11 10:51:15', '2024-05-11 11:05:03'),
+(6, NULL, 6, 2, '2024-05-11 11:05:57', '2024-05-11 11:06:04'),
+(7, NULL, 15, 1, '2024-05-11 11:25:55', '2024-05-11 11:25:55');
 
 --
 -- 已傾印資料表的索引
@@ -206,7 +221,7 @@ ALTER TABLE `user_interesting_product`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product_category`
@@ -236,7 +251,7 @@ ALTER TABLE `user`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user_interesting_product`
 --
 ALTER TABLE `user_interesting_product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- 已傾印資料表的限制式
