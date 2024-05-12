@@ -3,7 +3,6 @@
 namespace App\Middlewares;
 
 use App\Requests\Request;
-use App\Constants\Http\Method;
 
 class ResourceOriginAuthentication extends Middleware
 {
