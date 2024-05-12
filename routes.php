@@ -3,5 +3,5 @@
 use App\Supports\Route;
 use App\Controllers\ProductController;
 
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{product_id}', [ProductController::class, 'show']);
+Route::middleware(['csp'])->get('/products', [ProductController::class, 'index']);
+Route::middleware(['csp'])->get('/products/{product_id}', [ProductController::class, 'show']);

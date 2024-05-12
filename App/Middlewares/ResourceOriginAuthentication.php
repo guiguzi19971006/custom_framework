@@ -16,10 +16,6 @@ class ResourceOriginAuthentication extends Middleware
      */
     public static function handle(Request $request)
     {
-        if ($request->method() !== Method::GET) {
-            return;
-        }
-
         header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'");
     }
 }

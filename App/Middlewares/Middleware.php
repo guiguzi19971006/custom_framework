@@ -11,9 +11,7 @@ abstract class Middleware
      * 
      * @var array
      */
-    public static array $middlewares = [
-        'csp' => ResourceOriginAuthentication::class
-    ];
+    public static array $middlewares = [];
 
     /**
      * 只有特定路由會使用到的 Middlewares
@@ -21,7 +19,8 @@ abstract class Middleware
      * @var array
      */
     public static array $routeMiddlewares = [
-        'auth' => Authenticate::class
+        'auth' => Authenticate::class,
+        'csp' => ResourceOriginAuthentication::class
     ];
 
     /**
