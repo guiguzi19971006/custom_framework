@@ -11,7 +11,9 @@ abstract class Middleware
      * 
      * @var array
      */
-    public static array $middlewares = [];
+    public static array $middlewares = [
+        'csp' => ResourceOriginAuthentication::class
+    ];
 
     /**
      * 只有特定路由會使用到的 Middlewares
