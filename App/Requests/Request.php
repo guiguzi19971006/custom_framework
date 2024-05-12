@@ -117,6 +117,7 @@ class Request
         [$requestMethod, $requestUrl] = [$this->method(), $this->url()];
         $projectDirectoryName = substr(strrchr(substr(ROOT_PATH, 0, strlen(ROOT_PATH) - 1), DIRECTORY_SEPARATOR), 1);
         $requestUrl = str_replace(ENTRY_POINT_PATH, '', str_replace('/' . $projectDirectoryName, '', $requestUrl));
+        $requestUrl = (strrpos($requestUrl, '/') === strlen($requestUrl) - 1) ? substr($requestUrl, 0, strlen($requestUrl) - 1) : $requestUrl;
         $mappingUrls = array_filter(Route::$routes, function ($route) use ($requestMethod, $requestUrl) {
             return preg_match($route['pattern'], $requestUrl) && $route['method'] === $requestMethod;
         });
