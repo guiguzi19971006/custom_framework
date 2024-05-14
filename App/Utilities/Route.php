@@ -43,16 +43,16 @@ class Route extends Utility
      * 註冊路由
      * 
      * @param string $url
-     * @param array $action
-     * @param string|null $method
+     * @param array $actions
+     * @param string $method
      * 
      * @return static
      * 
      * @throws \Exception
      */
-    private function register(string $url, array $action, ?string $method = null)
+    private function register(string $url, array $actions, string $method = Method::GET)
     {
-        if (count($action) < 2) {
+        if (count($actions) < 2) {
             throw new Exception('Route must provide controller and method');
         }
 
@@ -60,7 +60,7 @@ class Route extends Utility
         static::$routes[$this->url] = [
             'method' => $method,
             'pattern' => '/^' . preg_replace(['/{[A-Za-z_]+}/', '/\//'], ['([0-9]+)', '\/'], $url) . '$/',
-            'action' => array_values($action),
+            'actions' => array_values($actions),
             'middlewares' => $this->middlewares
         ];
         return $this;
