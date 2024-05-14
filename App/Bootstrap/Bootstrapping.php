@@ -49,7 +49,7 @@ class Bootstrapping
 
         // 處理請求
         preg_match($route['pattern'], $route['url'], $params);
-        call_user_func_array([Container::resolve($route['action'][0]), $route['action'][1]], array_merge(array_slice($params, 1), [$this->request]));
+        call_user_func_array([Container::resolve($route['actions'][0]), $route['actions'][1]], array_merge(array_slice($params, 1), [$this->request]));
     }
 
     /**
