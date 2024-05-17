@@ -113,11 +113,7 @@ class DB extends Utility
      */
     public function getPDOInstance(string $dsn, string $user, string $password)
     {
-        if (!isset($this->pdo)) {
-            $this->pdo = new PDO($dsn, $user, $password);
-        }
-
-        return $this->pdo;
+        return $this->pdo = $this->pdo ?? new PDO($dsn, $user, $password);
     }
 
     /**
