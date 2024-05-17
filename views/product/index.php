@@ -19,11 +19,12 @@
                     <th>圖片</th>
                     <th>名稱</th>
                     <th>價格</th>
+                    <th>描述</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (isset($products) && is_array($products)) { ?>
-                    <?php foreach ($products as ['id' => $id, 'photo' => $photo, 'name' => $name, 'price' => $price]) { ?>
+                    <?php foreach ($products as ['id' => $id, 'photo' => $photo, 'name' => $name, 'price' => $price, 'description' => $description]) { ?>
                         <tr>
                             <td>
                                 <a href="/products/<?php echo $id; ?>">
@@ -37,6 +38,10 @@
 
                             <td>
                                 <?php echo $price; ?>
+                            </td>
+
+                            <td>
+                                <?php echo $description; ?>
                             </td>
                         </tr>
                     <?php } ?>

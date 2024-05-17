@@ -36,6 +36,13 @@
             </tr>
 
             <tr>
+                <th class="table-dark">描述</th>
+                <td>
+                    <?php echo $product['description']; ?>
+                </td>
+            </tr>
+
+            <tr>
                 <th class="table-dark">類別</th>
                 <td>
                     <?php echo $product['product_category_name']; ?>
