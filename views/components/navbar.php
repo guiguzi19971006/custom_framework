@@ -9,11 +9,11 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">最新優惠</a>
+                    <a href="/products/hottest" class="nav-link">熱門產品</a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">熱門商品</a>
+                    <a href="/products" class="nav-link">全部產品</a>
                 </li>
             </ul>
 
