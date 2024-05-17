@@ -57,6 +57,23 @@ class ProductService
      */
     public function getProductCount(bool $isOnlyGettingUndeleted = true)
     {
-        return $this->productRepository->getProductCount();
+        return $this->productRepository->getProductCount($isOnlyGettingUndeleted);
+    }
+
+    /**
+     * 取得被觀看次數由多至少排序的前三分之一項熱門產品
+     * 
+     * @param int|null $limit
+     * 
+     * @return array|null
+     */
+    public function getTheHottestProducts(?int $limit = null)
+    {
+        if ($limit === null) {
+            $productRowNums = $this->getProductCount();
+            $limit = round($productRowNums / 3);
+        }
+        
+        return $this->productRepository->getTheHottestProducts($limit);
     }
 }
