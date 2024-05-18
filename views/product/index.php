@@ -8,68 +8,63 @@
 <body>
     <?php view('components.navbar'); ?>
 
-    <main class="m-5">
-        <div class="main-title text-center">
-            <h1>商品列表</h1>
+    <main>
+        <div class="text-bg-dark p-3 m-3">
+            <div class="clearfix align-items-end">
+                <h2 class="float-start">全部產品</h2>
+                <span class="float-end">
+                    共有 <b><?php echo $productRowNums; ?></b> 項產品，目前在第 <b><?php echo $currentPage; ?></b> 頁
+                </span>
+            </div>
         </div>
 
-        <table class="table table-hover">
-            <thead>
-                <tr class="table-dark">
-                    <th>圖片</th>
-                    <th>名稱</th>
-                    <th>價格</th>
-                    <th>描述</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (isset($products) && is_array($products)) { ?>
-                    <?php foreach ($products as ['id' => $id, 'photo' => $photo, 'name' => $name, 'price' => $price, 'description' => $description]) { ?>
-                        <tr>
-                            <td>
-                                <a href="/products/<?php echo $id; ?>">
-                                    <img src="<?php echo PUBLIC_PATH . '/' . $photo; ?>" alt="<?php echo $name; ?>">
-                                </a>
-                            </td>
+        <div class="bg-light m-3 p-3">
+            <?php if (isset($products) && is_array($products)) { ?>
+                <?php foreach ($products as ['id' => $id, 'photo' => $photo, 'name' => $name, 'price' => $price, 'description' => $description]) { ?>
+                    <div class="card m-3">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <img src="<?php echo PUBLIC_PATH . '/' . $photo; ?>" alt="<?php echo $name; ?>" class="img-fluid rounded-start">
+                            </div>
 
-                            <td>
-                                <?php echo $name; ?>
-                            </td>
-
-                            <td>
-                                <?php echo $price; ?>
-                            </td>
-
-                            <td>
-                                <?php echo $description; ?>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                <?php } else { ?>
-                    <tr>
-                        <td class="text-center" colspan="3">暫無產品</td>
-                    </tr>
+                            <div class="col-md-8 text-center">
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <?php echo $name; ?>
+                                    </h4>
+                                    <p class="card-text">
+                                        <?php echo $description; ?>
+                                    </p>
+                                    <a href="/products/<?php echo $id; ?>" class="btn btn-dark">
+                                        查看詳細資訊
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <?php } ?>
-            </tbody>
-        </table>
+            <?php } ?>
+        </div>
 
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center m-3">
             <li class="page-item">
-                <a class="page-link" href="?page=1"><<|</a>
+                <a class="page-link" href="?page=1">&lt;|</a>
             </li>
             <li class="page-item">
-                    <a class="page-link" href="?page=<?php echo ($currentPage - 1) < 1 ? 1 : $currentPage - 1; ?>"><</a>
-                </li>
+                <a class="page-link" href="?page=<?php echo ($currentPage - 1) < 1 ? 1 : $currentPage - 1; ?>">&lt;</a>
+            </li>
             <?php for ($i = 1; $i <= $totalPageNums; $i++) { ?>
                 <li class="page-item<?php echo $i === $currentPage ? ' active' : ''; ?>">
-                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    <a class="page-link" href="?page=<?php echo $i; ?>">
+                        <?php echo $i; ?>
+                    </a>
                 </li>
             <?php } ?>
             <li class="page-item">
-                    <a class="page-link" href="?page=<?php echo ($currentPage + 1) > $totalPageNums ? $totalPageNums : $currentPage + 1; ?>">></a>
-                </li>
+                <a class="page-link" href="?page=<?php echo ($currentPage + 1) > $totalPageNums ? $totalPageNums : $currentPage + 1; ?>">&gt;</a>
+            </li>
             <li class="page-item">
-                <a class="page-link" href="?page=<?php echo $totalPageNums; ?>">|>></a>
+                <a class="page-link" href="?page=<?php echo $totalPageNums; ?>">|&gt;</a>
             </li>
         </ul>
     </main>
