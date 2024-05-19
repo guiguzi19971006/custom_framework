@@ -16,7 +16,7 @@
         <div class="bg-light m-3 p-3 row row-cols-1 row-cols-md-3 g-4">
             <?php foreach ($theHottestProducts as ['product_id' => $id, 'product_photo' => $photo, 'product_name' => $name, 'product_price' => $price, 'product_description' => $description]) { ?>
                 <div class="col">
-                    <div class="card m-3">
+                    <div class="card m-3 text-center">
                         <img src="<?php echo PUBLIC_PATH . '/' . $photo; ?>" alt="<?php echo $name; ?>" class="card-img-top">
                         <div class="card-body">
                             <h4 class="card-title">

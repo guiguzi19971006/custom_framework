@@ -13,7 +13,7 @@
             <h1>產品資訊</h1>
         </div>
 
-        <div class="bg-light p-3">
+        <div class="bg-light p-3 table-responsive">
             <table class="table table-hover">
                 <tr>
                     <th class="table-dark">圖片</th>

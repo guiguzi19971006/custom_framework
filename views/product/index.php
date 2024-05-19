@@ -21,13 +21,13 @@
         <div class="bg-light m-3 p-3">
             <?php if (isset($products) && is_array($products)) { ?>
                 <?php foreach ($products as ['id' => $id, 'photo' => $photo, 'name' => $name, 'price' => $price, 'description' => $description]) { ?>
-                    <div class="card m-3">
+                    <div class="card m-3 text-center">
                         <div class="row">
-                            <div class="col-md-4 text-center">
+                            <div class="col-md-4">
                                 <img src="<?php echo PUBLIC_PATH . '/' . $photo; ?>" alt="<?php echo $name; ?>" class="img-fluid rounded-start">
                             </div>
 
-                            <div class="col-md-8 text-center">
+                            <div class="col-md-8">
                                 <div class="card-body">
                                     <h4 class="card-title">
                                         <?php echo $name; ?>
