@@ -128,33 +128,34 @@ if (!function_exists('base64UrlEncode')) {
     }
 }
 
-if (!function_exists('jwtGenerator')) {
+if (!function_exists('jwtEncode')) {
     /**
      * 產生 JWT
      * 
+     * @param array $payload
      * @param string $secret
      * 
      * @return string
      */
-    function jwtGenerator(string $secret)
+    function jwtEncode(array $payload, string $secret)
     {
         $header = base64UrlEncode(json_encode(['alg' => 'HS256', 'typ' => 'JWT']));
-        $payload = base64UrlEncode(json_encode(['role' => 'admin', 'exp' => time() + 3600 * 24 * 7]));
+        $payload = base64UrlEncode(json_encode($payload));
         $signature = base64UrlEncode(hash_hmac('sha256', $header . '.' . $payload, $secret));
         return $header . '.' . $payload . '.' . $signature;
     }
 }
 
-if (!function_exists('jwtVerify')) {
+if (!function_exists('jwtDecode')) {
     /**
      * 驗證 JWT
      * 
      * @param string $token
      * @param string $secret
      * 
-     * @return bool
+     * @return array|false
      */
-    function jwtVerify(string $token, string $secret)
+    function jwtDecode(string $token, string $secret)
     {
         $tokenInfos = explode('.', $token);
 
@@ -175,7 +176,7 @@ if (!function_exists('jwtVerify')) {
             return false;
         }
 
-        return true;
+        return $originalPayload;
     }
 }
 
