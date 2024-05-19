@@ -15,7 +15,10 @@ class Authenticate extends Middleware
      */
     public static function handle(Request $request)
     {
-        if ($request->headers('Authorization') === false) {
+        $bearerAccessToken = $request->headers('Authorization');
+        $isUnauthorized = $bearerAccessToken === null || strpos($bearerAccessToken, 'Bearer ') === false || jwtDecode(substr($bearerAccessToken, strlen('Bearer ')), env('JWT_SECRET')) === false;
+
+        if ($isUnauthorized) {
             header('HTTP/1.1 401 Unauthorized');
             exit;
         }
