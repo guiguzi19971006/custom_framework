@@ -15,6 +15,6 @@ class ResourceOriginAuthentication extends Middleware
      */
     public static function handle(Request $request)
     {
-        header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'");
+        header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:");
     }
 }
