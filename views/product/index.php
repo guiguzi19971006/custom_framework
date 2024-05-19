@@ -9,10 +9,10 @@
     <?php view('components.navbar'); ?>
 
     <main>
-        <div class="text-bg-dark p-3 m-3">
+        <div class="text-bg-dark p-3 m-3 text-center">
             <div class="clearfix align-items-end">
-                <h2 class="float-start">全部產品</h2>
-                <span class="float-end">
+                <h2 class="float-md-start">全部產品</h2>
+                <span class="float-md-end">
                     共有 <b><?php echo $productRowNums; ?></b> 項產品，目前在第 <b><?php echo $currentPage; ?></b> 頁
                 </span>
             </div>
