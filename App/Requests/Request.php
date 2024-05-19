@@ -82,29 +82,23 @@ class Request
     /**
      * 取得 Request headers
      * 
-     * @param string|null $name
+     * @param string|null $key
      * 
      * @return mixed
      * 
      * @throws \Exception
      */
-    public function headers(?string $name = null)
+    public function headers(?string $key = null)
     {
-        $headers = getallheaders();
-
-        if ($headers === false) {
+        if (($headers = getallheaders()) === false) {
             throw new Exception('Cannot get request HTTP headers');
         }
 
-        if ($name === null) {
+        if ($key === null) {
             return $headers;
         }
 
-        if (!isset($headers[$name])) {
-            return false;
-        }
-
-        return $headers[$name];
+        return $headers[$key] ?? null;
     }
 
     /**
