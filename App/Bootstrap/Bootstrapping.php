@@ -45,7 +45,7 @@ class Bootstrapping
 
         // 透過 Middleware 過濾請求
         $middlewares = isset($route['middlewares']) && is_array($route['middlewares']) ? array_merge(array_keys(Middleware::$middlewares), $route['middlewares']) : array_keys(Middleware::$middlewares);
-        $this->filterRequest($middlewares);
+        $this->filterRequest(array_unique($middlewares));
 
         // 處理請求
         preg_match($route['pattern'], $route['url'], $params);
@@ -92,8 +92,8 @@ class Bootstrapping
     private function filterRequest(array $middlewares)
     {
         foreach ($middlewares as $middleware) {
-            if (!isset(Middleware::$middlewares[$middleware]) && !isset(Middleware::$routeMiddlewares[$middleware])) {
-                throw new Exception("Missing key '$middleware' in " . Middleware::class . '::$middlewares or ' . Middleware::class . '::$routeMiddlewares');
+            if (!(isset(Middleware::$middlewares[$middleware]) xor isset(Middleware::$routeMiddlewares[$middleware]))) {
+                throw new Exception("The key '$middleware' must exactly exist in " . Middleware::class . '::$middlewares or ' . Middleware::class . '::$routeMiddlewares and cannot exist both or neither exist');
             }
 
             $middleware = Middleware::$middlewares[$middleware] ?? Middleware::$routeMiddlewares[$middleware];
