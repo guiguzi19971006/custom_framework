@@ -18,7 +18,7 @@
             </ul>
 
             <div class="d-flex align-items-center">
-                <a href="#" class="mx-2 text-decoration-none text-light">
+                <a href="/users/register" class="mx-2 text-decoration-none text-light">
                     <i class="fa fa-user"></i>
                 </a>
 
