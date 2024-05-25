@@ -24,6 +24,11 @@ class Route extends Utility
      */
     private ?string $url = null;
 
+    /**
+     * @var string|null
+     */
+    private ?string $method = null;
+
 
     /**
      * @var array|null
@@ -57,7 +62,9 @@ class Route extends Utility
         }
 
         $this->url = $url;
-        static::$routes[$this->url] = [
+        $this->method = $method;
+        static::$routes[] = [
+            'url' => $url,
             'method' => $method,
             'pattern' => '/^' . preg_replace(['/{[A-Za-z_]+}/', '/\//'], ['([0-9]+)', '\/'], $url) . '$/',
             'actions' => array_values($actions),
@@ -76,9 +83,12 @@ class Route extends Utility
     public function middleware(array $middlewares)
     {
         $this->middlewares = array_values($middlewares);
+        $routes = array_filter(static::$routes, function ($route) {
+            return $route['url'] === $this->url && $route['method'] === $this->method;
+        });
 
-        if (isset($this->url, static::$routes[$this->url])) {
-            static::$routes[$this->url]['middlewares'] = $this->middlewares;
+        if (!empty($routes)) {
+            static::$routes[key($routes)]['middlewares'] = $this->middlewares;
         }
 
         return $this;
@@ -91,7 +101,7 @@ class Route extends Utility
      */
     public function clear()
     {
-        $this->url = $this->middlewares = null;
+        $this->url = $this->method = $this->middlewares = null;
     }
 
     /**
