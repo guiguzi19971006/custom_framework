@@ -9,7 +9,7 @@ use PDO;
 class DatabaseServiceProvider extends ServiceProvider
 {
     /**
-     * 綁定服務
+     * 註冊服務
      * 
      * @return void
      */
