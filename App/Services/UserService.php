@@ -52,7 +52,7 @@ class UserService
         }
 
         // 發送電子郵件給使用者以通知註冊成功
-        if (!Container::resolve(Mail::class)->send('註冊成功', view('email.user.registration_successfully', ['name' => $user['name']], true), [$user['email']])) {
+        if (!Container::resolve(Mail::class)->send(env('PROJECT_NAME') . ' - 會員註冊成功', view('email.user.registration_successfully', ['name' => $user['name']], true), [$user['email']])) {
             logToFile('發送使用者註冊成功通知信件失敗');
         }
 

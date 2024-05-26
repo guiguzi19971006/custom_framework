@@ -47,6 +47,7 @@ class UserController extends Controller
      */
     public function registerProcess(Request $request)
     {
+        header('Content-Type: application/json; charset=UTF-8');
         $input = array_map(fn ($value) => sanitizeInput($value), $request->input());
         $input = [
             'email' => $input['email'] ?? '',
@@ -66,7 +67,6 @@ class UserController extends Controller
             $response = json_encode($this->userService->registerUser($input));
         }
 
-        header('Content-Type: application/json; charset=UTF-8');
         echo $response;
     }
 }
