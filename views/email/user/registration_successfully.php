@@ -6,7 +6,7 @@
 </head>
 <body>
     <p>
-        親愛的<b><?php echo $name; ?>您好，您已完成會員註冊，祝您購物愉快!</b>
+        親愛的 <b><?php echo $name; ?></b> 您好，您已完成會員註冊，祝您購物愉快!
     </p>
 </body>
 </html>
