@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2024 年 05 月 18 日 00:07
+-- 產生時間： 2024 年 05 月 26 日 23:34
 -- 伺服器版本： 10.6.3-MariaDB-log
 -- PHP 版本： 7.0.33
 
@@ -34,7 +34,7 @@ CREATE TABLE `product` (
   `photo` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '產品圖片',
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '產品描述',
   `remaining_qty` smallint(5) UNSIGNED NOT NULL COMMENT '產品剩餘數量',
-  `is_sellable` tinyint(3) UNSIGNED NOT NULL COMMENT '產品可否銷售',
+  `is_sellable` tinyint(1) UNSIGNED NOT NULL COMMENT '產品可否銷售',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '最後更新時間',
   `deleted_at` timestamp NULL DEFAULT NULL COMMENT '刪除時間'
@@ -90,9 +90,8 @@ INSERT INTO `product_category` (`id`, `name`, `created_at`, `updated_at`, `delet
 
 CREATE TABLE `token` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `token_category_id` bigint(20) UNSIGNED NOT NULL COMMENT '權杖分類編號',
-  `secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Secret 字串',
-  `expired_time` datetime NOT NULL COMMENT '到期時間',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '內容',
+  `expiration_time` datetime NOT NULL COMMENT '到期時間',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '最後更新時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
@@ -105,10 +104,10 @@ CREATE TABLE `token` (
 
 CREATE TABLE `token_category` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名稱',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間	',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名稱',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '最後更新時間',
-  `deleted_at` timestamp NULL DEFAULT NULL COMMENT '刪除時間	'
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT '刪除時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
@@ -116,7 +115,7 @@ CREATE TABLE `token_category` (
 --
 
 INSERT INTO `token_category` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'JWT', '2024-04-28 13:36:16', '2024-04-28 13:36:16', NULL);
+(1, '會員註冊', '2024-05-26 04:00:34', '2024-05-26 04:00:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -126,21 +125,29 @@ INSERT INTO `token_category` (`id`, `name`, `created_at`, `updated_at`, `deleted
 
 CREATE TABLE `user` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '電子郵件',
+  `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '電子郵件',
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密碼',
-  `name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '姓名',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '姓名',
   `gender` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '生理性別',
   `birthday` date NOT NULL COMMENT '生日',
   `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '手機號碼',
   `photo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '相片',
-  `address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '住址',
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '住址',
   `last_login_time` datetime DEFAULT NULL COMMENT '最後登入時間',
   `last_login_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '最後登入 IP 位址',
   `registration_time` datetime NOT NULL COMMENT '註冊時間',
+  `is_activated` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否啟用',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '最後更新時間',
   `deleted_at` timestamp NULL DEFAULT NULL COMMENT '刪除時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- 傾印資料表的資料 `user`
+--
+
+INSERT INTO `user` (`id`, `email`, `password`, `name`, `gender`, `birthday`, `phone`, `photo`, `address`, `last_login_time`, `last_login_ip`, `registration_time`, `is_activated`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(21, 'guiguzi19971006@gmail.com', '$2y$10$BUxzFjp3Dz5F7O8Cd5fZ6.d6fOJepF3dMzAjiia2BgzWYtqWeWIc6', '尤鈞弘', 'M', '1997-10-06', '0978286261', NULL, '新北市', NULL, NULL, '2024-05-26 23:27:52', 0, '2024-05-26 15:27:52', '2024-05-26 15:27:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -207,7 +214,41 @@ INSERT INTO `user_interesting_product` (`id`, `user_id`, `product_id`, `created_
 (44, NULL, 12, '2024-05-17 14:49:04', '2024-05-17 14:49:04'),
 (45, NULL, 7, '2024-05-17 15:31:59', '2024-05-17 15:31:59'),
 (46, NULL, 11, '2024-05-17 16:04:31', '2024-05-17 16:04:31'),
-(47, NULL, 11, '2024-05-17 16:05:00', '2024-05-17 16:05:00');
+(47, NULL, 11, '2024-05-17 16:05:00', '2024-05-17 16:05:00'),
+(48, NULL, 14, '2024-05-17 16:13:33', '2024-05-17 16:13:33'),
+(49, NULL, 12, '2024-05-17 16:18:33', '2024-05-17 16:18:33'),
+(50, NULL, 3, '2024-05-17 16:20:57', '2024-05-17 16:20:57'),
+(51, NULL, 11, '2024-05-17 18:15:48', '2024-05-17 18:15:48'),
+(52, NULL, 14, '2024-05-18 12:09:00', '2024-05-18 12:09:00'),
+(53, NULL, 11, '2024-05-18 17:02:52', '2024-05-18 17:02:52'),
+(54, NULL, 11, '2024-05-18 17:05:51', '2024-05-18 17:05:51'),
+(55, NULL, 11, '2024-05-18 17:35:08', '2024-05-18 17:35:08'),
+(56, NULL, 9, '2024-05-18 17:35:41', '2024-05-18 17:35:41'),
+(57, NULL, 4, '2024-05-18 17:39:55', '2024-05-18 17:39:55'),
+(58, NULL, 3, '2024-05-18 17:46:04', '2024-05-18 17:46:04'),
+(59, NULL, 13, '2024-05-18 17:47:37', '2024-05-18 17:47:37'),
+(60, NULL, 11, '2024-05-19 09:11:03', '2024-05-19 09:11:03'),
+(61, NULL, 6, '2024-05-19 09:14:39', '2024-05-19 09:14:39'),
+(62, NULL, 13, '2024-05-19 09:18:24', '2024-05-19 09:18:24'),
+(63, NULL, 13, '2024-05-19 09:21:08', '2024-05-19 09:21:08'),
+(64, NULL, 13, '2024-05-19 09:21:21', '2024-05-19 09:21:21'),
+(65, NULL, 13, '2024-05-19 09:23:30', '2024-05-19 09:23:30'),
+(66, NULL, 13, '2024-05-19 09:28:40', '2024-05-19 09:28:40'),
+(67, NULL, 7, '2024-05-19 10:28:09', '2024-05-19 10:28:09'),
+(68, NULL, 11, '2024-05-19 10:28:34', '2024-05-19 10:28:34'),
+(69, NULL, 6, '2024-05-19 15:04:53', '2024-05-19 15:04:53'),
+(70, NULL, 13, '2024-05-21 06:28:28', '2024-05-21 06:28:28'),
+(71, NULL, 13, '2024-05-21 06:28:49', '2024-05-21 06:28:49'),
+(72, NULL, 11, '2024-05-21 06:29:18', '2024-05-21 06:29:18'),
+(73, NULL, 15, '2024-05-22 02:43:57', '2024-05-22 02:43:57'),
+(74, NULL, 13, '2024-05-22 03:19:07', '2024-05-22 03:19:07'),
+(75, NULL, 11, '2024-05-23 18:58:52', '2024-05-23 18:58:52'),
+(76, NULL, 11, '2024-05-24 07:01:12', '2024-05-24 07:01:12'),
+(77, NULL, 6, '2024-05-25 16:19:19', '2024-05-25 16:19:19'),
+(78, NULL, 13, '2024-05-25 17:52:21', '2024-05-25 17:52:21'),
+(79, NULL, 2, '2024-05-25 17:52:38', '2024-05-25 17:52:38'),
+(80, NULL, 4, '2024-05-25 19:38:02', '2024-05-25 19:38:02'),
+(81, NULL, 11, '2024-05-26 10:18:31', '2024-05-26 10:18:31');
 
 --
 -- 已傾印資料表的索引
@@ -230,8 +271,7 @@ ALTER TABLE `product_category`
 -- 資料表索引 `token`
 --
 ALTER TABLE `token`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `foreign_key_token_category_id` (`token_category_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- 資料表索引 `token_category`
@@ -285,13 +325,13 @@ ALTER TABLE `token_category`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user_interesting_product`
 --
 ALTER TABLE `user_interesting_product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- 已傾印資料表的限制式
@@ -302,12 +342,6 @@ ALTER TABLE `user_interesting_product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `foreign_key_product_category_id` FOREIGN KEY (`product_category_id`) REFERENCES `product_category` (`id`);
-
---
--- 資料表的限制式 `token`
---
-ALTER TABLE `token`
-  ADD CONSTRAINT `foreign_key_token_category_id` FOREIGN KEY (`token_category_id`) REFERENCES `token_category` (`id`);
 
 --
 -- 資料表的限制式 `user_interesting_product`
