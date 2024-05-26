@@ -60,7 +60,7 @@ class Mail
             $this->mailer->addAddress($email);
         }
 
-        $this->mailer->setFrom(env('SMTP_FROM_NAME'));
+        $this->mailer->setFrom(env('SMTP_FROM'), env('SMTP_FROM_NAME'));
         $this->mailer->isHTML(true);
         $this->mailer->Subject = $subject;
         $this->mailer->Body = $body;
