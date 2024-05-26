@@ -35,7 +35,7 @@ class UserRepository
         $statement = <<< 'SQL_STATEMENT'
             select * from `user`
             where (`email` = ? or `phone` = ?)
-            and `delete_at` is null
+            and `deleted_at` is null
             limit 1
         SQL_STATEMENT;
         return DB::query($statement, [$email, $phone])->get(true);

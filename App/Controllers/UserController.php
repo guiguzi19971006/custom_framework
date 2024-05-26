@@ -62,6 +62,7 @@ class UserController extends Controller
         if ($errors !== null) {
             $response = json_encode(['code' => '400', 'message' => '資料格式錯誤', 'errors' => $errors]);
         } else {
+            $input['password'] = password_hash($input['password'], PASSWORD_BCRYPT);
             $response = json_encode($this->userService->registerUser($input));
         }
 

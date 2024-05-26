@@ -47,7 +47,7 @@ class UserService
         }
 
         // 註冊使用者
-        if ($this->userRepository->createUser($user) < 1) {
+        if ($this->userRepository->createUser(array_merge($user, ['registration_time' => date('Y-m-d H:i:s')])) < 1) {
             return ['code' => '003', 'message' => '註冊失敗'];
         }
 
