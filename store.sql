@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2024 年 05 月 26 日 23:34
+-- 產生時間： 2024 年 05 月 26 日 23:39
 -- 伺服器版本： 10.6.3-MariaDB-log
 -- PHP 版本： 7.0.33
 
@@ -90,11 +90,11 @@ INSERT INTO `product_category` (`id`, `name`, `created_at`, `updated_at`, `delet
 
 CREATE TABLE `token` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '內容',
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '內容',
   `expiration_time` datetime NOT NULL COMMENT '到期時間',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '最後更新時間'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -104,11 +104,11 @@ CREATE TABLE `token` (
 
 CREATE TABLE `token_category` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名稱',
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名稱',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '最後更新時間',
   `deleted_at` timestamp NULL DEFAULT NULL COMMENT '刪除時間'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 傾印資料表的資料 `token_category`
@@ -125,22 +125,22 @@ INSERT INTO `token_category` (`id`, `name`, `created_at`, `updated_at`, `deleted
 
 CREATE TABLE `user` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '電子郵件',
-  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密碼',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '姓名',
-  `gender` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '生理性別',
+  `email` varchar(320) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '電子郵件',
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密碼',
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '姓名',
+  `gender` char(1) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '生理性別',
   `birthday` date NOT NULL COMMENT '生日',
-  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '手機號碼',
-  `photo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '相片',
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '住址',
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '手機號碼',
+  `photo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '相片',
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '住址',
   `last_login_time` datetime DEFAULT NULL COMMENT '最後登入時間',
-  `last_login_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '最後登入 IP 位址',
+  `last_login_ip` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '最後登入 IP 位址',
   `registration_time` datetime NOT NULL COMMENT '註冊時間',
   `is_activated` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否啟用',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '最後更新時間',
   `deleted_at` timestamp NULL DEFAULT NULL COMMENT '刪除時間'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 傾印資料表的資料 `user`
@@ -161,7 +161,7 @@ CREATE TABLE `user_interesting_product` (
   `product_id` bigint(20) UNSIGNED NOT NULL COMMENT '產品編號',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '建立時間',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '最後更新時間'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 傾印資料表的資料 `user_interesting_product`
