@@ -43,6 +43,7 @@ class Mail
         }
 
         $this->mailer->SMTPDebug = SMTP::DEBUG_OFF;
+        $this->mailer->CharSet = 'UTF-8';
         $this->mailer->isSMTP();
         $this->mailer->Host = env('SMTP_HOST');
         $this->mailer->SMTPAuth = true;
@@ -59,6 +60,7 @@ class Mail
             $this->mailer->addAddress($email);
         }
 
+        $this->mailer->setFrom(env('SMTP_FROM_NAME'));
         $this->mailer->isHTML(true);
         $this->mailer->Subject = $subject;
         $this->mailer->Body = $body;
