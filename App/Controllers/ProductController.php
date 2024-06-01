@@ -7,7 +7,6 @@ use App\Requests\Request;
 use App\Validators\Validator;
 use App\Forms\Pagination;
 use App\Models\Product;
-use App\Services\UserInterestingProductService;
 
 class ProductController extends Controller
 {
@@ -17,22 +16,15 @@ class ProductController extends Controller
     private $productService;
 
     /**
-     * @var \App\Services\UserInterestingProductService
-     */
-    private $userInterestingProductService;
-
-    /**
      * 建構式
      * 
      * @param \App\Services\ProductService $productService
-     * @param \App\Services\UserInterestingProductService $userInterestingProductService
      * 
      * @return void
      */
-    public function __construct(ProductService $productService, UserInterestingProductService $userInterestingProductService)
+    public function __construct(ProductService $productService)
     {
         $this->productService = $productService;
-        $this->userInterestingProductService = $userInterestingProductService;
     }
 
     /**
@@ -71,7 +63,7 @@ class ProductController extends Controller
         }
 
         // 新增產品被觀看次數
-        if ($this->userInterestingProductService->createProductViewedCount($productId) < 1) {
+        if ($this->productService->createProductViewedCount($productId) < 1) {
             logToFile('新增產品被觀看次數失敗');
         }
 

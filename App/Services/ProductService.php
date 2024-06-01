@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ProductRepository;
+use App\Repositories\UserInterestingProductRepository;
 
 class ProductService
 {
@@ -12,15 +13,22 @@ class ProductService
     private $productRepository;
 
     /**
+     * @var \App\Repositories\UserInterestingProductRepository
+     */
+    private $userInterestingProductRepository;
+
+    /**
      * 建構式
      * 
      * @param \App\Repositories\ProductRepository $productRepository
+     * @param \App\Repositories\UserInterestingProductRepository $userInterestingProductRepository
      * 
      * @return void
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, UserInterestingProductRepository $userInterestingProductRepository)
     {
         $this->productRepository = $productRepository;
+        $this->userInterestingProductRepository = $userInterestingProductRepository;
     }
 
     /**
@@ -75,5 +83,18 @@ class ProductService
         }
         
         return $this->productRepository->getTheHottestProducts($limit);
+    }
+
+    /**
+     * 新增產品被觀看次數
+     * 
+     * @param int $productId
+     * @param int|null $userId
+     * 
+     * @return int
+     */
+    public function createProductViewedCount(int $productId, ?int $userId = null)
+    {
+        return $this->userInterestingProductRepository->createProductViewedCount($productId, $userId);
     }
 }
