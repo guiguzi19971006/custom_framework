@@ -11,7 +11,7 @@ class UserRepository
      * 
      * @param array $user
      * 
-     * @return int
+     * @return mixed
      */
     public function createUser(array $user)
     {
@@ -19,7 +19,7 @@ class UserRepository
             insert into `user` (`email`, `password`, `name`, `gender`, `birthday`, `phone`, `address`, `registration_time`) values
             (?, ?, ?, ?, ?, ?, ?, ?)
         SQL_STATEMENT;
-        return DB::query($statement, array_values($user))->affectedRowNums();
+        return DB::query($statement, array_values($user))->insertedId();
     }
 
     /**
