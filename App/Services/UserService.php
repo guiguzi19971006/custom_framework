@@ -34,10 +34,8 @@ class UserService
      */
     public function registerUser(array $user)
     {
-        $currentTimestamp = time();
-
         // 檢查使用者是否年滿 18 歲
-        if (($currentTimestamp - strtotime($user['birthday'])) < ($currentTimestamp - strtotime('-18 years'))) {
+        if (strtotime($user['birthday']) > strtotime('-18 years')) {
             return ['code' => '001', 'message' => '須年滿 18 歲才可註冊帳號'];
         }
 
