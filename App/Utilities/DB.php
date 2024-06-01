@@ -75,6 +75,17 @@ class DB extends Utility
     }
 
     /**
+     * 取得新增資料後的該資料列編號
+     * 
+     * @return mixed
+     */
+    public function insertedId()
+    {
+        $data = $this->query('select last_insert_id() as `id`')->get(true);
+        return $data['id'] ?: null;
+    }
+
+    /**
      * 取得查詢資料
      * 
      * @param bool $isOnlyGettingFirstRow
