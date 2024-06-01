@@ -193,3 +193,15 @@ if (!function_exists('sanitizeInput')) {
         return htmlspecialchars($input, ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 }
+
+if (!function_exists('randomStr')) {
+    /**
+     * 產生長度為 64 字元的隨機字串
+     * 
+     * @return string
+     */
+    function randomStr()
+    {
+        return bin2hex(random_bytes(32));
+    }
+}
