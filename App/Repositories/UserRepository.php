@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Supports\DB;
+use App\Models\User;
 
 class UserRepository
 {
@@ -39,5 +40,23 @@ class UserRepository
             limit 1
         SQL_STATEMENT;
         return DB::query($statement, [$email, $phone])->get(true);
+    }
+
+    /**
+     * 透過使用者編號更新使用者帳號啟用狀態
+     * 
+     * @param int $isActivated
+     * @param int $userId
+     * 
+     * @return int
+     */
+    public function updateUserActivationStatusByUserId(int $isActivated, int $userId)
+    {
+        $statement = <<< 'SQL_STATEMENT'
+            update `user`
+            set `is_activated` = ?
+            where `id` = ?
+        SQL_STATEMENT;
+        return DB::query($statement, [$isActivated, $userId])->affectedRowNums();
     }
 }

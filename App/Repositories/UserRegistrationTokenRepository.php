@@ -37,4 +37,23 @@ class UserRegistrationTokenRepository
         SQL_STATEMENT;
         return DB::query($statement, [$userId])->affectedRowNums();
     }
+
+    /**
+     * 透過 token 內容取得有效的使用者註冊 token
+     * 
+     * @param string $token
+     * @param string $expirationTime
+     * 
+     * @return array|null
+     */
+    public function getTheValidUserRegistrationTokenByTokenContent(string $token, string $expirationTime)
+    {
+        $statement = <<< 'SQL_STATEMENT'
+            select * from `user_registration_token`
+            where `content` = ?
+            and `expiration_time` > ?
+            limit 1
+        SQL_STATEMENT;
+        return DB::query($statement, [$token, $expirationTime])->get(true);
+    }
 }

@@ -7,6 +7,7 @@ use App\Repositories\UserRegistrationTokenRepository;
 use App\Mailer\Mail;
 use App\Containers\Container;
 use App\Supports\DB;
+use App\Models\User;
 
 class UserService
 {
@@ -75,5 +76,29 @@ class UserService
 
         logToFile('註冊使用者成功');
         return ['code' => '000', 'message' => '註冊成功'];
+    }
+
+    /**
+     * 啟用使用者
+     * 
+     * @param string $token
+     * 
+     * @return array|null
+     */
+    public function activateTheUser(string $token)
+    {
+        return $this->userRegistrationTokenRepository->getTheValidUserRegistrationTokenByTokenContent($token, date('Y-m-d H:i:s'));
+    }
+
+    /**
+     * 透過使用者編號更新使用者帳號啟用狀態
+     * 
+     * @param int $userId
+     * 
+     * @return int
+     */
+    public function updateUserActivationStatusByUserId(int $userId)
+    {
+        return $this->userRepository->updateUserActivationStatusByUserId(User::$activated, $userId);
     }
 }

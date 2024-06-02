@@ -69,4 +69,27 @@ class UserController extends Controller
 
         echo $response;
     }
+
+    /**
+     * 使用者身分驗證頁面
+     * 
+     * @param string $token
+     * @param \App\Requests\Request $request
+     * 
+     * @return void
+     */
+    public function verify(string $token, Request $request)
+    {
+        if (($userRegistrationToken = $this->userService->activateTheUser($token)) === null) {
+            header('HTTP/1.1 404 Not Found');
+            exit;
+        }
+
+        // 啟用使用者
+        if ($this->userService->updateUserActivationStatusByUserId($userRegistrationToken['user_id']) < 1) {
+            logToFile('啟用使用者失敗');
+        }
+
+        view('user.verify');
+    }
 }
