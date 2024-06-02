@@ -11,3 +11,4 @@ Route::middleware(['csp'])->get('/products/{product_id}', [ProductController::cl
 
 Route::middleware(['csp'])->get('/users/register', [UserController::class, 'register']);
 Route::post('/users/register', [UserController::class, 'registerProcess']);
+Route::middleware(['csp'])->get('/users/verify/{token}', [UserController::class, 'verify']);
