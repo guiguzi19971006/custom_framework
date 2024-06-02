@@ -27,6 +27,9 @@ cp .env.example .env
 # 專案名稱
 PROJECT_NAME=
 
+# 網站網址
+SITE_URL=
+
 # 資料庫設定值
 DB_HOST=
 DB_PORT=
