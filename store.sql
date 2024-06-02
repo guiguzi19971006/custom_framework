@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2024 年 06 月 02 日 02:05
+-- 產生時間： 2024 年 06 月 03 日 01:10
 -- 伺服器版本： 10.6.3-MariaDB-log
 -- PHP 版本： 7.0.33
 
@@ -112,7 +112,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `name`, `gender`, `birthday`, `phone`, `photo`, `address`, `last_login_time`, `last_login_ip`, `registration_time`, `is_activated`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(29, 'guiguzi19971006@gmail.com', '$2y$10$M91xmLdhHOgRSSUF3bqGee49LiQA0Y3jx0cLTvF4AxSbRWiNZZ976', 'Eric', 'M', '1997-10-06', '0912345678', NULL, '新北市', NULL, NULL, '2024-06-02 02:04:07', 0, '2024-06-01 18:04:07', '2024-06-01 18:04:07', NULL);
+(31, 'guiguzi19971006@gmail.com', '$2y$10$kLm1zIhKp0DtedGa080LiObtAaUwyJ3oWEcaVvbSLfXf3qIPaLA/O', 'Eric', 'M', '1997-10-06', '0978286261', NULL, '新北市', NULL, NULL, '2024-06-02 18:48:20', 1, '2024-06-02 10:48:20', '2024-06-02 11:00:53', NULL);
 
 -- --------------------------------------------------------
 
@@ -222,7 +222,8 @@ INSERT INTO `user_interesting_product` (`id`, `user_id`, `product_id`, `created_
 (87, NULL, 11, '2024-05-31 08:49:37', '2024-05-31 08:49:37'),
 (88, NULL, 15, '2024-05-31 08:50:11', '2024-05-31 08:50:11'),
 (89, NULL, 3, '2024-05-31 08:55:08', '2024-05-31 08:55:08'),
-(90, NULL, 14, '2024-06-01 17:54:51', '2024-06-01 17:54:51');
+(90, NULL, 14, '2024-06-01 17:54:51', '2024-06-01 17:54:51'),
+(91, NULL, 2, '2024-06-02 12:48:31', '2024-06-02 12:48:31');
 
 -- --------------------------------------------------------
 
@@ -244,7 +245,7 @@ CREATE TABLE `user_registration_token` (
 --
 
 INSERT INTO `user_registration_token` (`id`, `user_id`, `content`, `expiration_time`, `created_at`, `updated_at`) VALUES
-(2, 29, '449c036ed91b1c68ef382d9c1acae4f9f27e462d62e3c7342090194d4f99019a', '2024-06-02 02:19:07', '2024-06-01 18:04:07', '2024-06-01 18:04:07');
+(4, 31, '21685c281bd17eb17ec281ab1ad633a87d4cce8ae5bb94bdc364a293117bbfca', '2024-06-02 19:03:20', '2024-06-02 10:48:20', '2024-06-02 10:48:20');
 
 --
 -- 已傾印資料表的索引
@@ -304,19 +305,19 @@ ALTER TABLE `product_category`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user_interesting_product`
 --
 ALTER TABLE `user_interesting_product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user_registration_token`
 --
 ALTER TABLE `user_registration_token`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- 已傾印資料表的限制式
