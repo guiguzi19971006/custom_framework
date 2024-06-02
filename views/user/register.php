@@ -64,6 +64,11 @@
                     <button class="btn btn-dark" type="submit">註冊</button>
                 </div>
             </form>
+
+            <div class="text-center">
+                <p>或是</p>
+                <a href="/users/login" class="text-dark">登入</a>
+            </div>
         </div>
     </main>
 
