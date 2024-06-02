@@ -66,7 +66,7 @@ class Route extends Utility
         static::$routes[] = [
             'url' => $url,
             'method' => $method,
-            'pattern' => '/^' . preg_replace(['/{[A-Za-z_]+}/', '/\//'], ['([0-9]+)', '\/'], $url) . '$/',
+            'pattern' => '/^' . preg_replace(['/{[A-Za-z_]+}/', '/\//'], ['([A-Za-z0-9\-]+)', '\/'], $url) . '$/',
             'actions' => array_values($actions),
             'middlewares' => $this->middlewares
         ];
