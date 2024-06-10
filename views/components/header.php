@@ -5,3 +5,5 @@
 <link rel="stylesheet" href="<?php echo PUBLIC_PATH; ?>/css/style.css?t=<?php echo time(); ?>">
 <script src="<?php echo PUBLIC_PATH; ?>/js/jquery.min.js"></script>
 <script src="<?php echo PUBLIC_PATH; ?>/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo PUBLIC_PATH; ?>/js/script.js?t=<?php echo time(); ?>"></script>
+<script src="<?php echo PUBLIC_PATH; ?>/js/helper.js?t=<?php echo time(); ?>"></script>
