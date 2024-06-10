@@ -15,21 +15,19 @@
                 <li class="nav-item">
                     <a href="/products" class="nav-link text-decoration-none">全部產品</a>
                 </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">會員專區</a>
+                    <ul class="dropdown-menu"></ul>
+                </li>
             </ul>
 
-            <div class="d-flex align-items-center">
-                <a href="/users/register" class="mx-2 text-decoration-none text-light">
-                    <i class="fa fa-user"></i>
-                </a>
-
-                <a href="#" class="mx-2 text-decoration-none text-light">
-                    <i class="fa fa-shopping-cart"></i>
-                </a>
-
-                <a href="#" class="mx-2 text-decoration-none text-light">
+            <form class="d-flex">
+                <input type="text" class="form-control me-2" name="search" id="search" placeholder="搜尋關鍵字">
+                <button type="button" class="btn btn-dark" id="search-button">
                     <i class="fa fa-search"></i>
-                </a>
-            </div>
+                </button>
+            </form>
         </div>
     </div>
 </nav>
