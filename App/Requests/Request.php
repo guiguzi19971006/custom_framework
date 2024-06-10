@@ -146,4 +146,23 @@ class Request
 
         return $input[$key] ?? $default;
     }
+
+    /**
+     * 取得送出請求的 IP 位址
+     * 
+     * @return string
+     */
+    public function ip()
+    {
+        if (empty($_SERVER['HTTP_CLIENT_IP']) && empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['REMOTE_ADDR'];
+        }
+
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            return $_SERVER['HTTP_CLIENT_IP'];
+        }
+
+        $ipAddresses = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        return trim($ipAddresses[0]);
+    }
 }
