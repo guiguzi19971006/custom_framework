@@ -92,4 +92,43 @@ class UserController extends Controller
 
         view('user.verify');
     }
+
+    /**
+     * 會員登入頁面
+     * 
+     * @param \App\Requests\Request $request
+     * 
+     * @return void
+     */
+    public function login(Request $request)
+    {
+        view('user.login');
+    }
+
+    /**
+     * 會員登入
+     * 
+     * @param \App\Requests\Request $request
+     * 
+     * @return void
+     */
+    public function loginProcess(Request $request)
+    {
+        header('Content-Type: application/json; charset=UTF-8');
+        $input = array_map(fn ($value) => sanitizeInput($value), $request->input());
+        $input = [
+            'email' => $input['email'] ?? '',
+            'password' => $input['password'] ?? '',
+            'is_remembered' => $input['is_remembered'] ?? ''
+        ];
+        $errors = Validator::errors($input, User::$patterns, User::$errors);
+
+        if ($errors !== null) {
+            $response = json_encode(['code' => '400', 'message' => '資料格式錯誤', 'errors' => $errors]);
+        } else {
+            $response = json_encode($this->userService->loginUser($input, $request->ip()));
+        }
+
+        echo $response;
+    }
 }

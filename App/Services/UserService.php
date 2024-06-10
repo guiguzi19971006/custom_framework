@@ -101,4 +101,45 @@ class UserService
     {
         return $this->userRepository->updateUserActivationStatusByUserId(User::$activated, $userId);
     }
+
+    /**
+     * 登入使用者
+     * 
+     * @param array $input
+     * @param string $ip
+     * 
+     * @return array
+     */
+    public function loginUser(array $input, string $ip)
+    {
+        $user = $this->userRepository->getUserDataByEmail($input['email']);
+
+        if ($user === null) {
+            return ['code' => '001', 'message' => '該電子郵件不存在'];
+        }
+
+        if (!password_verify($input['password'], $user['password'])) {
+            return ['code' => '002', 'message' => '密碼錯誤'];
+        }
+
+        // 更新使用者登入資訊
+        if ($this->userRepository->updateUserLoginDataByEmail($user['email'], $ip, date('Y-m-d H:i:s')) < 1) {
+            logToFile('更新使用者登入資訊失敗');
+        }
+
+        // 定義 Payload 所需資訊
+        $currentTimestamp = time();
+        $payload = [
+            'iss' => env('SITE_URL'),
+            'iat' => $currentTimestamp,
+            'exp' => $currentTimestamp + (!empty($input['is_remembered']) && $input['is_remembered'] === 'Y' ? 60 * 60 * 24 : 60 * 60),
+            'user' => [
+                'id' => $user['id'],
+                'name' => $user['name'],
+                'email' => $user['email']
+            ]
+        ];
+
+        return ['code' => '000', 'message' => '登入成功', 'access_token' => jwtEncode($payload, env('JWT_SECRET'))];
+    }
 }

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Supports\DB;
-use App\Models\User;
 
 class UserRepository
 {
@@ -58,5 +57,42 @@ class UserRepository
             where `id` = ?
         SQL_STATEMENT;
         return DB::query($statement, [$isActivated, $userId])->affectedRowNums();
+    }
+
+    /**
+     * 透過電子郵件取得使用者資訊
+     * 
+     * @param string $email
+     * 
+     * @return array|null
+     */
+    public function getUserDataByEmail(string $email)
+    {
+        $statement = <<< 'SQL_STATEMENT'
+            select * from `user`
+            where `email` = ?
+            and `deleted_at` is null
+            limit 1
+        SQL_STATEMENT;
+        return DB::query($statement, [$email])->get(true);
+    }
+
+    /**
+     * 透過電子郵件更新使用者登入資訊
+     * 
+     * @param string $email
+     * @param string $loginIp
+     * @param string $loginDateTime
+     * 
+     * @return int
+     */
+    public function updateUserLoginDataByEmail(string $email, string $loginIp, string $loginDateTime)
+    {
+        $statement = <<< 'SQL_STATEMENT'
+            update `user`
+            set `last_login_time` = ?, `last_login_ip` = ?
+            where `email` = ?
+        SQL_STATEMENT;
+        return DB::query($statement, [$loginDateTime, $loginIp, $email])->affectedRowNums();
     }
 }
